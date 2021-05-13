@@ -1,0 +1,2 @@
+csc sudoku.cs
+pause
