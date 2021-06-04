@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy5
     {
-        public bool Run(object[,] blockforfield, int[,] sudokufield, object[,] potential, object[] potentialblock, object[,] furtherinfluencingblocks, ref int globalcnt)
+        public bool Run(int[,] sudokufield, List<int>[,] potential, List<int>[] potentialblock, List<int>[,] furtherinfluencingblocks, ref int globalcnt)
         {
             List<string> BorderingBlock = new List<string>();
             bool DontDoIt;
@@ -17,7 +17,7 @@ namespace Strategies
                     int k = i - (i-1) % 3;
                     int l = j - (j-1) % 3;
 
-                    foreach (int a in potential[i,j] as List<int>)
+                    foreach (int a in potential[i,j])
                     {
                         DontDoIt = false;
                         BorderingBlock.Clear();
@@ -33,9 +33,9 @@ namespace Strategies
                             }
                         }
                         
-                        foreach (int b in furtherinfluencingblocks[i,j] as List<int>)
+                        foreach (int b in furtherinfluencingblocks[i,j])
                         {
-                            if (!(potentialblock[b] as List<int>).Contains(a))
+                            if (!potentialblock[b].Contains(a))
                             {
                                 for (int c = 0; c < BorderingBlock.Count; c++)
                                 {

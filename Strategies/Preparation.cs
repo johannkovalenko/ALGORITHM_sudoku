@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Preparation
     {
-        public void Run(object[,] blockforfield, int[,] sudokufield, object[,] potential, object[] potentialblock, object[] fieldsperblock, object[,] furtherinfluencingblocks)
+        public void Run(int[,][] blockforfield, int[,] sudokufield, List<int>[,] potential, List<int>[] potentialblock, object[] fieldsperblock, List<int>[,] furtherinfluencingblocks)
         {
             List<int> FullPot = new List<int>(new int[]{1,2,3,4,5,6,7,8,9});
             List<int[]> FieldKoorHori;

@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy6
     {
-        public bool Run(object[,] blockforfield, int[,] sudokufield, object[,] potential, object[] potentialblock, object[,] furtherinfluencingblocks, object[] fieldsperblock, ref int globalcnt)
+        public bool Run(int[,][] blockforfield, int[,] sudokufield, List<int>[,] potential, List<int[]>[] fieldsperblock, ref int globalcnt)
         {
             int value;
             Dictionary<int,int> howoften;
@@ -16,13 +16,13 @@ namespace Strategies
                 {
                     //Console.ReadLine();
                     howoften = new Dictionary<int,int>();
-                    foreach (int blockno in blockforfield[i,j] as int[])
+                    foreach (int blockno in blockforfield[i,j])
                     {
                         //Console.WriteLine(blockno + "   " + i + "   " + j);
 
-                        foreach (int[] koors in fieldsperblock[blockno] as List<int[]>)
+                        foreach (int[] koors in fieldsperblock[blockno])
                         {
-                            foreach (int number in potential[koors[0],koors[1]] as List<int>)
+                            foreach (int number in potential[koors[0],koors[1]])
                             {
                                 if (howoften.TryGetValue(number, out value))
                                 {
@@ -35,7 +35,7 @@ namespace Strategies
                             }
                         }
                         
-                        var IntList = potential[i,j] as List<int>;
+                        var IntList = potential[i,j];
                         foreach (int ky in howoften.Keys)
                         {
                             //Console.WriteLine("{0}   {1}    {2}     {3}     {4}", ky, howoften[ky], i, j, blockno);

@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy7
     {
-        public bool Run(object[,] blockforfield, int[,] sudokufield, object[,] potential, object[] potentialblock, object[,] furtherinfluencingblocks, object[] fieldsperblock, ref int globalcnt)
+        public bool Run(int[,] sudokufield, List<int>[,] potential, List<int[]>[] fieldsperblock, ref int globalcnt)
         {
             int cnt;  
             
@@ -14,18 +14,18 @@ namespace Strategies
                 for (int o=1;o<=9;o++)
                 {  
                     cnt = 0;
-                    foreach (int[] j in fieldsperblock[i] as List<int[]>)
+                    foreach (int[] j in fieldsperblock[i])
                     {
-                        var IntList = potential[j[0],j[1]] as List<int>;
+                        var IntList = potential[j[0],j[1]];
                         foreach (int m in IntList)
                             if (o == m)
                                 cnt++;
                     }
                     if (cnt==1)
                     {
-                        foreach (int[] j in fieldsperblock[i] as List<int[]>)
+                        foreach (int[] j in fieldsperblock[i])
                         {
-                            if ((potential[j[0],j[1]] as List<int>).Contains(o))
+                            if (potential[j[0],j[1]].Contains(o))
                             {
                                 sudokufield[j[0],j[1]] = o;
                                 //Console.WriteLine("Case three {0},{1}", i, j);
