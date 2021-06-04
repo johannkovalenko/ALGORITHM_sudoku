@@ -1,2 +1,0 @@
-csc sudoku.cs
-pause
