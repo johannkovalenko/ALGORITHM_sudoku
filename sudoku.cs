@@ -6,7 +6,7 @@ class Sudoku
 {
     private static int[,] sudokufield = new int[10,10];
     private static List<int>[,] potential = new List<int>[10,10]; //Potential for each field
-    private static List<int>[] potentialblock = new List<int>[28]; //Potential for each block
+    private static List<List<int>> potentialblock = new List<List<int>>(); //Potential for each block
     private static List<int[]>[] fieldsperblock = new List<int[]>[28]; //
 
     private static int[,][] blockforfield = new int[10,10][];

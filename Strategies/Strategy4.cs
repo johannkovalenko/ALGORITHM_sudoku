@@ -7,9 +7,7 @@ namespace Strategies
         public bool Run(int[,] sudokufield, List<int>[,] potential, ref int globalcnt)
         {
             for (int i=1;i<=9;i++)
-            {
                 for (int j=1;j<=9;j++)
-                {
                     if (potential[i,j].Count == 1)
                     {
                         sudokufield[i,j] = potential[i,j][0];
@@ -18,8 +16,6 @@ namespace Strategies
                         globalcnt++;
                         return true;
                     }
-                }
-            }
 
             return false;
         }
