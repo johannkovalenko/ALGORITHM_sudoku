@@ -45,7 +45,8 @@ class Sudoku
                 twotimesnothing = 0;
             }
         
-            new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
+            Environment.Exit(-1);
+            //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
             //Console.WriteLine();
             //Console.ReadLine();        
         }
@@ -62,21 +63,53 @@ class Sudoku
     {
         List<int[]> IntListArr = new List<int[]>();     
 
+        bool earlyExit;
+        PrintPotential(3, 2, fields);
+
         new Strategies.Strategy1().Run(blockforfield, fields, potentialblock);
+        //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
+        PrintPotential(3, 2, fields);
+
         new Strategies.Strategy2().Run(fields, fieldsperblock, IntListArr);
+        //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
+        PrintPotential(3, 2, fields);
+
         new Strategies.Strategy3().Run(blockforfield, fields, fieldsperblock, IntListArr);
-        if (new Strategies.Strategy4().Run(fields, ref globalcnt))
-            return true;
-
-        if (new Strategies.Strategy5().Run(fields, potentialblock, furtherinfluencingblocks, ref globalcnt))
-            return true;
-
-        if (new Strategies.Strategy6().Run(blockforfield, fields, fieldsperblock, ref globalcnt))
-            return true;
+        //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
+        PrintPotential(3, 2, fields);
         
-        if (new Strategies.Strategy7().Run(fields, fieldsperblock, ref globalcnt))
-            return true;
+        earlyExit = new Strategies.Strategy4().Run(fields, ref globalcnt);
+        //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
+        PrintPotential(3, 2, fields);
+
+        if (earlyExit) return true;
+
+        earlyExit = new Strategies.Strategy5().Run(fields, potentialblock, furtherinfluencingblocks, ref globalcnt);
+        //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
+        PrintPotential(3, 2, fields);
+
+        if (earlyExit) return true;
+        
+        earlyExit = new Strategies.Strategy6().Run(blockforfield, fields, fieldsperblock, ref globalcnt);
+        //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
+        PrintPotential(3, 2, fields);
+
+        if (earlyExit) return true;
+
+        earlyExit = new Strategies.Strategy7().Run(fields, fieldsperblock, ref globalcnt);
+        //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
+        PrintPotential(3, 2, fields);
+
+        if (earlyExit) return true;
 
         return false;
+    }
+
+    private static void PrintPotential(int x, int y, Field[,] fields)
+    {
+        Console.Write(x + " " + y + "\t" + fields[x, y].number + "\t");
+        foreach (int test in fields[x,y].potential)
+            Console.Write(test + " ");
+        Console.WriteLine();
     }
 }
