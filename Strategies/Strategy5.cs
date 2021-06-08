@@ -5,9 +5,21 @@ namespace Strategies
 {
     public class Strategy5
     {
+        private class Coordinates
+        {
+            public int x;
+            public int y;
+
+            public Coordinates(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+        }
+
         public bool Run(Field[,] fields, List<List<int>> potentialblock)
         {
-            List<string> BorderingBlock = new List<string>();
+            var BorderingBlock = new List<Coordinates>();
             
             for (int i=1;i<=9;i++)
                 for (int j=1;j<=9;j++)
@@ -34,45 +46,35 @@ namespace Strategies
             return false;
         }
 
-        private void Task1(ref int i, ref int j, int k, int l, List<string> BorderingBlock)
+        private void Task1(ref int i, ref int j, int k, int l, List<Coordinates> BorderingBlock)
         {
             for (int m=k;m<=k+2;m++) 
                 for (int n=l;n<=l+2;n++)
                     if (!(m == i && n == j))
-                        BorderingBlock.Add(String.Format("{0}{1}",m, n));
+                        BorderingBlock.Add(new Coordinates(m,n));
         }
 
-        private void Task2(ref int i, ref int j, int a, List<List<int>> potentialblock, List<string> BorderingBlock, Field[,] fields)
+        private void Task2(ref int i, ref int j, int a, List<List<int>> potentialblock, List<Coordinates> BorderingBlock, Field[,] fields)
         {
             foreach (int b in fields[i,j].furtherinfluencingblocks)
                 if (!potentialblock[b].Contains(a))
                     for (int c = 0; c < BorderingBlock.Count; c++)
-                        if (BorderingBlock[c] != "")
+                        if (BorderingBlock[c] != null)
                         {
-                            if (b <= 9)
-                            {
-                                if (BorderingBlock[c].Substring(0,1) == String.Format("{0}", b))
-                                    BorderingBlock[c] = "";
-                            }
-                            else
-                            {
-                                if (BorderingBlock[c].Substring(1,1) == String.Format("{0}", b-9))
-                                    BorderingBlock[c] = "";
-                            }
+                            if (b <= 9 && BorderingBlock[c].x == b)
+                                BorderingBlock[c] = null;
+                            else if (BorderingBlock[c].y == b-9)
+                                BorderingBlock[c] = null;
+
                         }
         }
 
-        private bool Task3(List<string> BorderingBlock, Field[,] fields)
+        private bool Task3(List<Coordinates> BorderingBlock, Field[,] fields)
         {
-            foreach (string c in BorderingBlock)
-                if (c != "")
-                {
-                    int x = int.Parse(c.Substring(0,1));
-                    int y = int.Parse(c.Substring(1,1)); 
-                    if (fields[x,y].number == 0)
-                        return true;
-                }
-
+            foreach (Coordinates c in BorderingBlock)
+                if (c != null && fields[c.x, c.y].number == 0)
+                    return true;
+                    
             return false;
         }
     }
