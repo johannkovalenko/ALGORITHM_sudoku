@@ -25,7 +25,6 @@ class Sudoku
         new InputData.Sudoku().ReadOut(fields, ref globalcnt);
         new Strategies.Preparation().Run(blockforfield, fields, potentialblock, fieldsperblock, furtherinfluencingblocks);
         new OutputData.Sudoku().Print(fields);
-        new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
         Console.WriteLine();
 
         while(globalcnt <81 && twotimesnothing < 2)
