@@ -35,12 +35,10 @@ class Sudoku
                twotimesnothing++;
             }   
             else
-            {
                 twotimesnothing = 0;
-            }
         
-            //Sudoku.PrintSudokuField();
-            //Console.WriteLine();
+            new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
+            // Console.WriteLine();
             //Console.ReadLine();        
         }
         //Sudoku.PrintPotential();
