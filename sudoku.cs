@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 class Sudoku
 {
-    private static int[,] sudokufield = new int[10,10];
-    private static List<int>[,] potential = new List<int>[10,10]; //Potential for each field
     private static List<List<int>> potentialblock = new List<List<int>>(); //Potential for each block
     private static List<int[]>[] fieldsperblock = new List<int[]>[28]; //
 
@@ -15,90 +13,69 @@ class Sudoku
 
     public static void Main()
     {       
+        var fields = new Field[10, 10];
+
+        for (int i=1; i<=9; i++)
+            for (int j=1; j<=9; j++)
+                fields[i, j] = new Field();
+
+    
         int twotimesnothing = 0;
 
-        new InputData.Sudoku().ReadOut(sudokufield, ref globalcnt);
-        new Strategies.Preparation().Run(blockforfield, sudokufield, potential, potentialblock, fieldsperblock, furtherinfluencingblocks);
-        new OutputData.Sudoku().Print(sudokufield);
-        new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
+        new InputData.Sudoku().ReadOut(fields, ref globalcnt);
+        new Strategies.Preparation().Run(blockforfield, fields, potentialblock, fieldsperblock, furtherinfluencingblocks);
+        new OutputData.Sudoku().Print(fields);
         Console.WriteLine();
 
         while(globalcnt <81 && twotimesnothing < 2)
         {
-            if (!Sudoku.ReducePot()) 
+            if (!Sudoku.ReducePot(fields)) 
             {
                Console.WriteLine("Not finished");
                twotimesnothing++;
             }   
             else
-            {
-                twotimesnothing = 0;
-            }
-        
-            Environment.Exit(-1);      
+                twotimesnothing = 0;    
         }
-        
-        new OutputData.Sudoku().Print(sudokufield);
+        new OutputData.Sudoku().Print(fields);
 
         Console.ReadLine(); 
     }
 
-    public static bool ReducePot()
+    public static bool ReducePot(Field[,] fields)
     {
         List<int[]> IntListArr = new List<int[]>();     
 
         bool earlyExit;
 
-        PrintPotentialFull();
-
-        new Strategies.Strategy1().Run(blockforfield, sudokufield, potential, potentialblock);
-        //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotentialFull();
-            
-        new Strategies.Strategy2().Run(sudokufield, potential, fieldsperblock, IntListArr);
-        //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotentialFull();
-
-        new Strategies.Strategy3().Run(blockforfield, sudokufield, potential, fieldsperblock, IntListArr);
-        //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotentialFull();
-
-        earlyExit = new Strategies.Strategy4().Run(sudokufield, potential, ref globalcnt);
-        //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotentialFull();
-
+        new Strategies.Strategy1().Run(blockforfield, fields, potentialblock);
+        new Strategies.Strategy2().Run(fields, fieldsperblock, IntListArr);
+        new Strategies.Strategy3().Run(blockforfield, fields, fieldsperblock, IntListArr);
+        
+        earlyExit = new Strategies.Strategy4().Run(fields, ref globalcnt);
         if (earlyExit) return true;
 
-        earlyExit = new Strategies.Strategy5().Run(sudokufield, potential, potentialblock, furtherinfluencingblocks, ref globalcnt);
-        //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotentialFull();
-
+        earlyExit = new Strategies.Strategy5().Run(fields, potentialblock, furtherinfluencingblocks, ref globalcnt);
         if (earlyExit) return true;
         
-        earlyExit = new Strategies.Strategy6().Run(blockforfield, sudokufield, potential, fieldsperblock, ref globalcnt);
-        //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotentialFull();
-
+        earlyExit = new Strategies.Strategy6().Run(blockforfield, fields, fieldsperblock, ref globalcnt);
         if (earlyExit) return true;
 
-        earlyExit = new Strategies.Strategy7().Run(sudokufield, potential, fieldsperblock, ref globalcnt);
-        //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotentialFull();
-
+        earlyExit = new Strategies.Strategy7().Run(fields, fieldsperblock, ref globalcnt);
         if (earlyExit) return true;
 
         return false;
     }
 
-    private static void PrintPotentialFull()
+    private static void PrintPotentialFull(Field[,] fields)
     {
         var sb = new System.Text.StringBuilder();
 
         for (int x=1; x<9; x++)
             for (int y=1; y<9; y++)
             {
-                sb.Append(x + " " + y + "    " + sudokufield[x, y] + "    ");
-                foreach (int test in potential[x,y])
+                sb.Append(x + " " + y + "    " + fields[x, y].number + "    ");
+                foreach (int test in fields[x,y].potential)
                     sb.Append(test + " ");
                 sb.Append("\r\n");        
             }

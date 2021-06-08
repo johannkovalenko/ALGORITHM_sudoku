@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy5
     {
-        public bool Run(int[,] sudokufield, List<int>[,] potential, List<List<int>> potentialblock, List<int>[,] furtherinfluencingblocks, ref int globalcnt)
+        public bool Run(Field[,] fields, List<List<int>> potentialblock, List<int>[,] furtherinfluencingblocks, ref int globalcnt)
         {
             List<string> BorderingBlock = new List<string>();
             
@@ -15,17 +15,17 @@ namespace Strategies
                     int k = i - (i-1) % 3;
                     int l = j - (j-1) % 3;
 
-                    foreach (int a in potential[i,j])
+                    foreach (int a in fields[i,j].potential)
                     {
                         BorderingBlock.Clear();
     
                         Task1(i, j, k, l, BorderingBlock);
                         Task2(i, j, a, potentialblock, furtherinfluencingblocks, BorderingBlock);
 
-                        if (!Task3(BorderingBlock, sudokufield))
+                        if (!Task3(BorderingBlock, fields))
                         {
-                            sudokufield[i,j] = a;
-                            potential[i,j] = new List<int>(new int[]{});
+                            fields[i,j].number = a;
+                            fields[i,j].potential = new List<int>(new int[]{});
                             globalcnt++;
                             return true;
                         }
@@ -63,14 +63,14 @@ namespace Strategies
                         }
         }
 
-        private bool Task3(List<string> BorderingBlock, int[,] sudokufield)
+        private bool Task3(List<string> BorderingBlock, Field[,] fields)
         {
             foreach (string c in BorderingBlock)
                 if (c != default(string))
                 {
                     int x = int.Parse(c.Substring(0,1));
                     int y = int.Parse(c.Substring(1,1)); 
-                    if (sudokufield[x,y] == default(int))
+                    if (fields[x,y].number == default(int))
                         return true;
                 }
 
