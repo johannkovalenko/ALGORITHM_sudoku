@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy6
     {
-        public bool Run(Field[,] fields, List<int[]>[] fieldsperblock, ref int globalcnt)
+        public bool Run(Field[,] fields, List<int[]>[] fieldsperblock)
         {
             int value;
             
@@ -21,15 +21,12 @@ namespace Strategies
                                     howoften[number] = value + 1;
                                 else
                                     howoften.Add(number,1);
-                        
-                        var IntList = fields[i,j].potential;
 
                         foreach (int ky in howoften.Keys)
-                            if (howoften[ky] == 1 && IntList.Contains(ky))
+                            if (howoften[ky] == 1 && fields[i,j].potential.Contains(ky))
                             {
                                 fields[i,j].number = ky;
-                                fields[i,j].potential = new List<int>(new int[]{});
-                                globalcnt++;
+                                fields[i,j].potential.Clear();
                                 return true;
                             }
                     } 

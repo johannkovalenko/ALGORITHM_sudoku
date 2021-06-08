@@ -86,6 +86,24 @@ namespace Debug
         
             }
 
-        }        
+        }    
+
+        public static void PrintPotentialFull(Field[,] fields)
+        {
+            var sb = new System.Text.StringBuilder();
+
+            for (int x=1; x<=1; x++)
+                for (int y=1; y<=1; y++)
+                {
+                    sb.Append(x + " " + y + "    " + fields[x, y].number + "    ");
+                    foreach (int test in fields[x,y].potential)
+                        sb.Append(test + " ");
+                    sb.Append("\r\n");        
+                }
+
+            sb.Append("-------\r\n");
+            //File.AppendAllText(@"working.txt", sb.ToString());
+            Console.WriteLine(sb.ToString());
+        }    
     }
 }

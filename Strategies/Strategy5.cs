@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy5
     {
-        public bool Run(Field[,] fields, List<List<int>> potentialblock, ref int globalcnt)
+        public bool Run(Field[,] fields, List<List<int>> potentialblock)
         {
             List<string> BorderingBlock = new List<string>();
             
@@ -25,8 +25,7 @@ namespace Strategies
                         if (!Task3(BorderingBlock, fields))
                         {
                             fields[i,j].number = a;
-                            fields[i,j].potential = new List<int>(new int[]{});
-                            globalcnt++;
+                            fields[i,j].potential.Clear();
                             return true;
                         }
                     }
@@ -48,17 +47,17 @@ namespace Strategies
             foreach (int b in fields[i,j].furtherinfluencingblocks)
                 if (!potentialblock[b].Contains(a))
                     for (int c = 0; c < BorderingBlock.Count; c++)
-                        if (BorderingBlock[c] != default(string))
+                        if (BorderingBlock[c] != "")
                         {
                             if (b <= 9)
                             {
                                 if (BorderingBlock[c].Substring(0,1) == String.Format("{0}", b))
-                                    BorderingBlock[c] = default(string);
+                                    BorderingBlock[c] = "";
                             }
                             else
                             {
                                 if (BorderingBlock[c].Substring(1,1) == String.Format("{0}", b-9))
-                                    BorderingBlock[c] = default(string);
+                                    BorderingBlock[c] = "";
                             }
                         }
         }
@@ -66,11 +65,11 @@ namespace Strategies
         private bool Task3(List<string> BorderingBlock, Field[,] fields)
         {
             foreach (string c in BorderingBlock)
-                if (c != default(string))
+                if (c != "")
                 {
                     int x = int.Parse(c.Substring(0,1));
                     int y = int.Parse(c.Substring(1,1)); 
-                    if (fields[x,y].number == default(int))
+                    if (fields[x,y].number == 0)
                         return true;
                 }
 

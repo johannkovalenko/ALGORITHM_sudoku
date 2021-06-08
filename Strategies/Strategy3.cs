@@ -4,19 +4,19 @@ namespace Strategies
 {
     public class Strategy3
     {
-        public void Run(Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
+        public void Run(Field[,] fields, List<int[]>[] fieldsperblock)
         {
             for (int i=1;i<=9;i++)
                 for (int j=1; j<=7; j+=3)
                 {
-                    SubProcedureHorizontal(ref i, ref j, fields, fieldsperblock, IntListArr);
-                    SubProcedureVertical(ref i, ref j, fields, fieldsperblock, IntListArr);
+                    SubProcedureHorizontal(ref i, ref j, fields, fieldsperblock);
+                    SubProcedureVertical(ref i, ref j, fields, fieldsperblock);
                 }
         }
 
-        private void SubProcedureHorizontal(ref int i, ref int j, Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
+        private void SubProcedureHorizontal(ref int i, ref int j, Field[,] fields, List<int[]>[] fieldsperblock)
         {
-            IntListArr.Clear();
+            var IntListArr = new List<int[]>();
 
             Horizontal0(ref i, ref j, fields, IntListArr);
 
@@ -28,9 +28,9 @@ namespace Strategies
         }
 
 
-        private void SubProcedureVertical(ref int i, ref int j, Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
+        private void SubProcedureVertical(ref int i, ref int j, Field[,] fields, List<int[]>[] fieldsperblock)
         {
-            IntListArr.Clear();
+            var IntListArr = new List<int[]>();
 
             Vertical0(ref i, ref j, fields, IntListArr);
 
@@ -59,10 +59,8 @@ namespace Strategies
             foreach (int[] n in fieldsperblock[blockarr[2]])
                 if (n[0] != i)
                 {
-                    var IntList2 = new List<int>(fields[n[0],n[1]].potential);
-                    IntList2.Remove(IntListArr[0][0]);
-                    IntList2.Remove(IntListArr[0][1]);
-                    fields[n[0],n[1]].potential = IntList2;   
+                    fields[n[0],n[1]].potential.Remove(IntListArr[0][0]);
+                    fields[n[0],n[1]].potential.Remove(IntListArr[0][1]); 
                 }
 
         }
@@ -72,10 +70,8 @@ namespace Strategies
             for (int l=1; l<=9; l++)
                 if (l!=j && l!=j+1 && l!= j+2)
                 {
-                    var IntList2 = new List<int>(fields[i,l].potential);
-                    IntList2.Remove(IntListArr[0][0]);
-                    IntList2.Remove(IntListArr[0][1]);
-                    fields[i,l].potential = IntList2;   
+                    fields[i,l].potential.Remove(IntListArr[0][0]);
+                    fields[i,l].potential.Remove(IntListArr[0][1]);   
                 }
         }
 
@@ -96,10 +92,8 @@ namespace Strategies
             foreach (int[] n in fieldsperblock[blockarr[2]])
                 if (n[1] != i)
                 {
-                    var IntList2 = new List<int>(fields[n[0],n[1]].potential);
-                    IntList2.Remove(IntListArr[0][0]);
-                    IntList2.Remove(IntListArr[0][1]);
-                    fields[n[0],n[1]].potential = IntList2;   
+                    fields[n[0],n[1]].potential.Remove(IntListArr[0][0]);
+                    fields[n[0],n[1]].potential.Remove(IntListArr[0][1]); 
                 }
         }
 
@@ -108,10 +102,8 @@ namespace Strategies
             for (int l = 1; l <=9; l++)
                 if (l != j && l != j+1 && l!= j+2)
                 {
-                    var IntList2 = new List<int>(fields[l,i].potential);
-                    IntList2.Remove(IntListArr[0][0]);
-                    IntList2.Remove(IntListArr[0][1]);
-                    fields[l,i].potential = IntList2;   
+                    fields[l,i].potential.Remove(IntListArr[0][0]);
+                    fields[l,i].potential.Remove(IntListArr[0][1]);
                 }
         }
     }

@@ -20,6 +20,8 @@ namespace OutputData
 
                 Console.Write("\n");
             }
+
+            Console.WriteLine();
         }
 
         public void SaveInTxt(Field[,] fields, string fileName)
