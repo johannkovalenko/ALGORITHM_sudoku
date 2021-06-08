@@ -64,41 +64,41 @@ class Sudoku
         List<int[]> IntListArr = new List<int[]>();     
 
         bool earlyExit;
-        PrintPotential(3, 2, fields);
+        PrintPotentialFull(fields);
 
         new Strategies.Strategy1().Run(blockforfield, fields, potentialblock);
         //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
-        PrintPotential(3, 2, fields);
+        PrintPotentialFull(fields);
 
         new Strategies.Strategy2().Run(fields, fieldsperblock, IntListArr);
         //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
-        PrintPotential(3, 2, fields);
+        PrintPotentialFull(fields);
 
         new Strategies.Strategy3().Run(blockforfield, fields, fieldsperblock, IntListArr);
         //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
-        PrintPotential(3, 2, fields);
+        PrintPotentialFull(fields);
         
         earlyExit = new Strategies.Strategy4().Run(fields, ref globalcnt);
         //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
-        PrintPotential(3, 2, fields);
+        PrintPotentialFull(fields);
 
         if (earlyExit) return true;
 
         earlyExit = new Strategies.Strategy5().Run(fields, potentialblock, furtherinfluencingblocks, ref globalcnt);
         //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
-        PrintPotential(3, 2, fields);
+        PrintPotentialFull(fields);
 
         if (earlyExit) return true;
         
         earlyExit = new Strategies.Strategy6().Run(blockforfield, fields, fieldsperblock, ref globalcnt);
         //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
-        PrintPotential(3, 2, fields);
+        PrintPotentialFull(fields);
 
         if (earlyExit) return true;
 
         earlyExit = new Strategies.Strategy7().Run(fields, fieldsperblock, ref globalcnt);
         //new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
-        PrintPotential(3, 2, fields);
+        PrintPotentialFull(fields);
 
         if (earlyExit) return true;
 
@@ -111,5 +111,22 @@ class Sudoku
         foreach (int test in fields[x,y].potential)
             Console.Write(test + " ");
         Console.WriteLine();
+    }
+
+    private static void PrintPotentialFull(Field[,] fields)
+    {
+        var sb = new System.Text.StringBuilder();
+
+        for (int x=1; x<9; x++)
+            for (int y=1; y<9; y++)
+            {
+                sb.Append(x + " " + y + "    " + fields[x, y].number + "    ");
+                foreach (int test in fields[x,y].potential)
+                    sb.Append(test + " ");
+                sb.Append("\r\n");        
+            }
+
+        sb.Append("-------\r\n");
+        File.AppendAllText(@"C:\Users\u540929\OneDrive - Lufthansa Group\johann\TL\Programming\Test\notworking.txt", sb.ToString());
     }
 }
