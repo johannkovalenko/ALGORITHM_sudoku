@@ -14,7 +14,7 @@ namespace Strategies
                         continue;
 
                     UnknownActivity_RemovePotential(row, col, blockforfield, potentialblock, fields[row, col]);
-                    RemovePotentialForAllFieldsInBlock(row, col, fields[row, col]);
+                    RemovePotentialForAllFieldsInBlock(row, col, fields, fields[row, col]);
                     RemovePotentialForAllFieldsInRow(row, fields, fields[row, col]);
                     RemovePotentialForAllFieldsInCol(col, fields, fields[row, col]);
                 }
@@ -30,7 +30,7 @@ namespace Strategies
             }
         }
 
-        private void RemovePotentialForAllFieldsInBlock(int row, int col, Field currentField)
+        private void RemovePotentialForAllFieldsInBlock(int row, int col, Field[,] fields, Field currentField)
         {
             int rowBlock = row - (row - 1) % 3;
             int colBlock = col - (col - 1) % 3;
@@ -38,9 +38,9 @@ namespace Strategies
             for (int i = rowBlock; i <= rowBlock+2; i++)
                 for (int j = colBlock; j <= colBlock+2; j++)
                 {
-                    var IntList = new List<int>(currentField.potential);
+                    var IntList = new List<int>(fields[i,j].potential);
                     IntList.Remove(currentField.number);
-                    currentField.potential = IntList;                           
+                    fields[i,j].potential = IntList;                           
                 }
         }
 
