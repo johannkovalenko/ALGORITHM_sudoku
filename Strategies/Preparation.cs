@@ -5,12 +5,12 @@ namespace Strategies
 {
     public class Preparation
     {
-        public void Run(int[,][] blockforfield, int[,] sudokufield, List<int>[,] potential, List<List<int>> potentialblock, List<int[]>[] fieldsperblock, List<int>[,] furtherinfluencingblocks)
+        public void Run(int[,][] blockforfield, Field[,] fields, List<List<int>> potentialblock, List<int[]>[] fieldsperblock, List<int>[,] furtherinfluencingblocks)
         {
             var block19to27= new Dictionary<string,int>();
 
             Task1(fieldsperblock, block19to27);
-            Task2(blockforfield, sudokufield, potential, potentialblock, fieldsperblock, furtherinfluencingblocks, block19to27);
+            Task2(blockforfield, fields, potentialblock, fieldsperblock, furtherinfluencingblocks, block19to27);
         }
 
         private void Task1(List<int[]>[] fieldsperblock, Dictionary<string,int> block19to27)
@@ -32,17 +32,16 @@ namespace Strategies
                 }
         }
 
-        private void Task2(int[,][] blockforfield, int[,] sudokufield, List<int>[,] potential, List<List<int>> potentialblock, List<int[]>[] fieldsperblock, List<int>[,] furtherinfluencingblocks, Dictionary<string,int> block19to27)
+        private void Task2(int[,][] blockforfield, Field[,] fields, List<List<int>> potentialblock, List<int[]>[] fieldsperblock, List<int>[,] furtherinfluencingblocks, Dictionary<string,int> block19to27)
         {
             var FullPot = new List<int>(new int[]{1,2,3,4,5,6,7,8,9});
-            var EmptyPot = new List<int>();
 
             for (int i = 1; i <=9; i++)
             {
                 var FieldKoorHori = new List<int[]>();
                 var FieldKoorVert = new List<int[]>();
                 
-                for(int j=1;j<=9;j++)
+                for(int j=1; j<=9; j++)
                 {
                     int k = i - (i-1) % 3;
                     int l = j - (j-1) % 3;
@@ -61,10 +60,8 @@ namespace Strategies
                     
                     blockforfield[i,j] = new int[] {i, j+9, block19to27[String.Format("{0}{1}",k,l)]};
                     
-                    if (sudokufield[i,j] == default(int))
-                        potential[i,j] = FullPot;
-                    else
-                        potential[i,j] = EmptyPot;
+                    if (fields[i,j].number == 0)
+                        fields[i,j].potential = FullPot;
 
                     FieldKoorHori.Add(new int[] {i,j});
                     FieldKoorVert.Add(new int[] {j,i});

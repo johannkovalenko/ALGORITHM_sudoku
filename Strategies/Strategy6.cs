@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy6
     {
-        public bool Run(int[,][] blockforfield, int[,] sudokufield, List<int>[,] potential, List<int[]>[] fieldsperblock, ref int globalcnt)
+        public bool Run(int[,][] blockforfield, Field[,] fields, List<int[]>[] fieldsperblock, ref int globalcnt)
         {
             int value;
             
@@ -16,18 +16,19 @@ namespace Strategies
                     foreach (int blockno in blockforfield[i,j])
                     {
                         foreach (int[] koors in fieldsperblock[blockno])
-                            foreach (int number in potential[koors[0],koors[1]])
+                            foreach (int number in fields[koors[0],koors[1]].potential)
                                 if (howoften.TryGetValue(number, out value))
                                     howoften[number] = value + 1;
                                 else
                                     howoften.Add(number,1);
                         
-                        var IntList = potential[i,j];
+                        var IntList = fields[i,j].potential;
+
                         foreach (int ky in howoften.Keys)
                             if (howoften[ky] == 1 && IntList.Contains(ky))
                             {
-                                sudokufield[i,j] = ky;
-                                potential[i,j] = new List<int>(new int[]{});
+                                fields[i,j].number = ky;
+                                fields[i,j].potential = new List<int>(new int[]{});
                                 globalcnt++;
                                 return true;
                             }
