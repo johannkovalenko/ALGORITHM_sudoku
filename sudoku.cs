@@ -27,6 +27,7 @@ class Sudoku
         //Sudoku.PrintFurtherInfluencingBlocks();
         //Sudoku.PrintBlockForField();
         new OutputData.Sudoku().Print(fields);
+        new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
         Console.WriteLine();
 
         while(globalcnt <81 && twotimesnothing < 2)
@@ -44,7 +45,7 @@ class Sudoku
                 twotimesnothing = 0;
             }
         
-            //Sudoku.PrintSudokuField();
+            new OutputData.Sudoku().SaveInTxt(fields, "notworking.txt");
             //Console.WriteLine();
             //Console.ReadLine();        
         }
