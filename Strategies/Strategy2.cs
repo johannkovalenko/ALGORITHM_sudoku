@@ -11,17 +11,17 @@ namespace Strategies
                 {
                     IntListArr.Clear();
                     
-                    SubTask0(fields, fieldsperblock, IntListArr, i, j);
+                    SubTask0(fields, fieldsperblock, IntListArr, ref i, ref j);
                     
                     if (IntListArr.Count != 2)
                         continue;
 
-                    SubTask1(IntListArr, fields, j);
-                    SubTask2(IntListArr, fields, j);
+                    SubTask1(IntListArr, fields, ref j);
+                    SubTask2(IntListArr, fields, ref j);
                 }
         }
 
-        private void SubTask0(Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr, int i, int j)
+        private void SubTask0(Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr, ref int i, ref int j)
         {
             foreach (int[] kk in fieldsperblock[i])
                 if (fields[kk[0],kk[1]].potential.Contains(j))
@@ -29,7 +29,7 @@ namespace Strategies
 
         }
 
-        private void SubTask1(List<int[]> IntListArr, Field[,] fields, int j)
+        private void SubTask1(List<int[]> IntListArr, Field[,] fields, ref int j)
         {
             if (IntListArr[0][0] != IntListArr[1][0])
                 return;
@@ -43,7 +43,7 @@ namespace Strategies
                 }
         }
 
-        private void SubTask2(List<int[]> IntListArr, Field[,] fields, int j)
+        private void SubTask2(List<int[]> IntListArr, Field[,] fields, ref int j)
         {
             if (IntListArr[0][1] != IntListArr[1][1])
                 return;

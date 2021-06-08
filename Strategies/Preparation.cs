@@ -5,12 +5,12 @@ namespace Strategies
 {
     public class Preparation
     {
-        public void Run(int[,][] blockforfield, Field[,] fields, List<List<int>> potentialblock, List<int[]>[] fieldsperblock, List<int>[,] furtherinfluencingblocks)
+        public void Run(Field[,] fields, List<List<int>> potentialblock, List<int[]>[] fieldsperblock)
         {
             var block19to27= new Dictionary<string,int>();
 
             Task1(fieldsperblock, block19to27);
-            Task2(blockforfield, fields, potentialblock, fieldsperblock, furtherinfluencingblocks, block19to27);
+            Task2(fields, potentialblock, fieldsperblock, block19to27);
         }
 
         private void Task1(List<int[]>[] fieldsperblock, Dictionary<string,int> block19to27)
@@ -32,7 +32,7 @@ namespace Strategies
                 }
         }
 
-        private void Task2(int[,][] blockforfield, Field[,] fields, List<List<int>> potentialblock, List<int[]>[] fieldsperblock, List<int>[,] furtherinfluencingblocks, Dictionary<string,int> block19to27)
+        private void Task2(Field[,] fields, List<List<int>> potentialblock, List<int[]>[] fieldsperblock, Dictionary<string,int> block19to27)
         {
             var FullPot = new List<int>(new int[]{1,2,3,4,5,6,7,8,9});
 
@@ -56,9 +56,9 @@ namespace Strategies
                         if (j != m)
                             influencinglist.Add(m+9); 
                     
-                    furtherinfluencingblocks[i,j] = influencinglist;
+                    fields[i,j].furtherinfluencingblocks = influencinglist;
                     
-                    blockforfield[i,j] = new int[] {i, j+9, block19to27[String.Format("{0}{1}",k,l)]};
+                    fields[i,j].block = new int[] {i, j+9, block19to27[String.Format("{0}{1}",k,l)]};
                     
                     if (fields[i,j].number == 0)
                         fields[i,j].potential = FullPot;

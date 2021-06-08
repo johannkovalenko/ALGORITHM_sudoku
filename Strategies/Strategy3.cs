@@ -4,45 +4,44 @@ namespace Strategies
 {
     public class Strategy3
     {
-        public void Run(int[,][] blockforfield, Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
+        public void Run(Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
         {
             for (int i=1;i<=9;i++)
-                foreach (int j in new int[]{1,4,7})
+                for (int j=1; j<=7; j+=3)
                 {
-                    SubProcedureHorizontal(i, j, blockforfield, fields, fieldsperblock, IntListArr);
-                    SubProcedureVertical(i, j, blockforfield, fields, fieldsperblock, IntListArr);
+                    SubProcedureHorizontal(ref i, ref j, fields, fieldsperblock, IntListArr);
+                    SubProcedureVertical(ref i, ref j, fields, fieldsperblock, IntListArr);
                 }
         }
 
-        private void SubProcedureHorizontal(int i, int j, int[,][] blockforfield, Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
+        private void SubProcedureHorizontal(ref int i, ref int j, Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
         {
             IntListArr.Clear();
 
-            Horizontal0(i, j, fields, IntListArr);
+            Horizontal0(ref i, ref j, fields, IntListArr);
 
             if (!(IntListArr.Count == 2 && IntListArr[0][0] == IntListArr[1][0] && IntListArr[0][1] == IntListArr[1][1]))
                 return;
 
-            Horizontal1(i, j, blockforfield, IntListArr, fieldsperblock, fields);
-            Horizontal2(i, j, fields, IntListArr);
+            Horizontal1(ref i, ref j, IntListArr, fieldsperblock, fields);
+            Horizontal2(ref i, ref j, fields, IntListArr);
         }
 
 
-        private void SubProcedureVertical(int i, int j, int[,][] blockforfield, Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
+        private void SubProcedureVertical(ref int i, ref int j, Field[,] fields, List<int[]>[] fieldsperblock, List<int[]> IntListArr)
         {
             IntListArr.Clear();
 
-            Vertical0(i, j, fields, IntListArr);
+            Vertical0(ref i, ref j, fields, IntListArr);
 
             if (!(IntListArr.Count == 2 && IntListArr[0][0] == IntListArr[1][0] && IntListArr[0][1] == IntListArr[1][1]))
                 return;
             
-
-            Vertical1(i, j, blockforfield, IntListArr, fieldsperblock, fields);
-            Vertical2(i, j, fields, IntListArr);
+            Vertical1(ref i, ref j, IntListArr, fieldsperblock, fields);
+            Vertical2(ref i, ref j, fields, IntListArr);
         }
 
-        private void Horizontal0(int i, int j, Field[,] fields, List<int[]> IntListArr)
+        private void Horizontal0(ref int i, ref int j, Field[,] fields, List<int[]> IntListArr)
         {
             for (int m=j;m<=j+2;m++)
             {
@@ -53,9 +52,9 @@ namespace Strategies
             }
         }
 
-        private void Horizontal1(int i, int j, int[,][] blockforfield, List<int[]> IntListArr, List<int[]>[] fieldsperblock, Field[,] fields)
+        private void Horizontal1(ref int i, ref int j, List<int[]> IntListArr, List<int[]>[] fieldsperblock, Field[,] fields)
         {
-            int[] blockarr = blockforfield[i,j];
+            int[] blockarr = fields[i,j].block;
             
             foreach (int[] n in fieldsperblock[blockarr[2]])
                 if (n[0] != i)
@@ -68,7 +67,7 @@ namespace Strategies
 
         }
 
-        private void Horizontal2(int i, int j, Field[,] fields, List<int[]> IntListArr)
+        private void Horizontal2(ref int i, ref int j, Field[,] fields, List<int[]> IntListArr)
         {
             for (int l=1; l<=9; l++)
                 if (l!=j && l!=j+1 && l!= j+2)
@@ -80,7 +79,7 @@ namespace Strategies
                 }
         }
 
-        private void Vertical0(int i, int j, Field[,] fields, List<int[]> IntListArr)
+        private void Vertical0(ref int i, ref int j, Field[,] fields, List<int[]> IntListArr)
         {
             for (int m=j;m<=j+2;m++)
             {
@@ -90,9 +89,9 @@ namespace Strategies
             }
         }
 
-        private void Vertical1(int i, int j, int[,][] blockforfield, List<int[]> IntListArr, List<int[]>[] fieldsperblock, Field[,] fields)
+        private void Vertical1(ref int i, ref int j, List<int[]> IntListArr, List<int[]>[] fieldsperblock, Field[,] fields)
         {
-            int[] blockarr = blockforfield[j,i];
+            int[] blockarr = fields[j,i].block;
             
             foreach (int[] n in fieldsperblock[blockarr[2]])
                 if (n[1] != i)
@@ -104,7 +103,7 @@ namespace Strategies
                 }
         }
 
-        private void Vertical2(int i, int j, Field[,] fields, List<int[]> IntListArr)
+        private void Vertical2(ref int i, ref int j, Field[,] fields, List<int[]> IntListArr)
         {
             for (int l = 1; l <=9; l++)
                 if (l != j && l != j+1 && l!= j+2)

@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy6
     {
-        public bool Run(int[,][] blockforfield, Field[,] fields, List<int[]>[] fieldsperblock, ref int globalcnt)
+        public bool Run(Field[,] fields, List<int[]>[] fieldsperblock, ref int globalcnt)
         {
             int value;
             
@@ -13,7 +13,7 @@ namespace Strategies
                 for (int j=1;j<=9;j++)
                 {
                     var howoften = new Dictionary<int,int>();
-                    foreach (int blockno in blockforfield[i,j])
+                    foreach (int blockno in fields[i,j].block)
                     {
                         foreach (int[] koors in fieldsperblock[blockno])
                             foreach (int number in fields[koors[0],koors[1]].potential)

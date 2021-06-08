@@ -5,7 +5,7 @@ namespace Strategies
 {
     public class Strategy5
     {
-        public bool Run(Field[,] fields, List<List<int>> potentialblock, List<int>[,] furtherinfluencingblocks, ref int globalcnt)
+        public bool Run(Field[,] fields, List<List<int>> potentialblock, ref int globalcnt)
         {
             List<string> BorderingBlock = new List<string>();
             
@@ -19,8 +19,8 @@ namespace Strategies
                     {
                         BorderingBlock.Clear();
     
-                        Task1(i, j, k, l, BorderingBlock);
-                        Task2(i, j, a, potentialblock, furtherinfluencingblocks, BorderingBlock);
+                        Task1(ref i, ref j, k, l, BorderingBlock);
+                        Task2(ref i, ref j, a, potentialblock, BorderingBlock, fields);
 
                         if (!Task3(BorderingBlock, fields))
                         {
@@ -35,7 +35,7 @@ namespace Strategies
             return false;
         }
 
-        private void Task1(int i, int j, int k, int l, List<string> BorderingBlock)
+        private void Task1(ref int i, ref int j, int k, int l, List<string> BorderingBlock)
         {
             for (int m=k;m<=k+2;m++) 
                 for (int n=l;n<=l+2;n++)
@@ -43,9 +43,9 @@ namespace Strategies
                         BorderingBlock.Add(String.Format("{0}{1}",m, n));
         }
 
-        private void Task2(int i, int j, int a, List<List<int>> potentialblock, List<int>[,] furtherinfluencingblocks, List<string> BorderingBlock)
+        private void Task2(ref int i, ref int j, int a, List<List<int>> potentialblock, List<string> BorderingBlock, Field[,] fields)
         {
-            foreach (int b in furtherinfluencingblocks[i,j])
+            foreach (int b in fields[i,j].furtherinfluencingblocks)
                 if (!potentialblock[b].Contains(a))
                     for (int c = 0; c < BorderingBlock.Count; c++)
                         if (BorderingBlock[c] != default(string))

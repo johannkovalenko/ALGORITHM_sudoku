@@ -1,18 +1,21 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics;
+
 
 class Sudoku
 {
     private static List<List<int>> potentialblock = new List<List<int>>(); //Potential for each block
     private static List<int[]>[] fieldsperblock = new List<int[]>[28]; //
-
-    private static int[,][] blockforfield = new int[10,10][];
     private static int globalcnt = 0;
-    private static List<int>[,] furtherinfluencingblocks = new List<int>[10,10];
 
     public static void Main()
-    {       
+    {
+        var stopwatch = new Stopwatch();
+
+        stopwatch.Start();
+
         var fields = new Field[10, 10];
 
         for (int i=1; i<=9; i++)
@@ -23,13 +26,15 @@ class Sudoku
         int twotimesnothing = 0;
 
         new InputData.Sudoku().ReadOut(fields, ref globalcnt);
-        new Strategies.Preparation().Run(blockforfield, fields, potentialblock, fieldsperblock, furtherinfluencingblocks);
+        new Strategies.Preparation().Run(fields, potentialblock, fieldsperblock);
         new OutputData.Sudoku().Print(fields);
         Console.WriteLine();
 
         while(globalcnt <81 && twotimesnothing < 2)
         {
-            if (!Sudoku.ReducePot(fields)) 
+            bool earlyExit = Sudoku.ReducePot(fields);
+
+            if (!earlyExit) 
             {
                Console.WriteLine("Not finished");
                twotimesnothing++;
@@ -37,9 +42,12 @@ class Sudoku
             else
                 twotimesnothing = 0;    
         }
+
         new OutputData.Sudoku().Print(fields);
 
-        Console.ReadLine(); 
+        stopwatch.Stop();
+
+        Console.WriteLine(stopwatch.Elapsed.Milliseconds);
     }
 
     public static bool ReducePot(Field[,] fields)
@@ -48,31 +56,31 @@ class Sudoku
 
         bool earlyExit;
 
-        new Strategies.Strategy1().Run(blockforfield, fields, potentialblock);
+        new Strategies.Strategy1().Run(fields, potentialblock);
         new Strategies.Strategy2().Run(fields, fieldsperblock, IntListArr);
-        new Strategies.Strategy3().Run(blockforfield, fields, fieldsperblock, IntListArr);
+        new Strategies.Strategy3().Run(fields, fieldsperblock, IntListArr);
         
         earlyExit = new Strategies.Strategy4().Run(fields, ref globalcnt);
         if (earlyExit) return true;
 
-        earlyExit = new Strategies.Strategy5().Run(fields, potentialblock, furtherinfluencingblocks, ref globalcnt);
+        earlyExit = new Strategies.Strategy5().Run(fields, potentialblock, ref globalcnt);
         if (earlyExit) return true;
         
-        earlyExit = new Strategies.Strategy6().Run(blockforfield, fields, fieldsperblock, ref globalcnt);
+        earlyExit = new Strategies.Strategy6().Run(fields, fieldsperblock, ref globalcnt);
         if (earlyExit) return true;
 
         earlyExit = new Strategies.Strategy7().Run(fields, fieldsperblock, ref globalcnt);
         if (earlyExit) return true;
-
+    
         return false;
     }
 
-    private static void PrintPotentialFull(Field[,] fields)
+    public static void PrintPotentialFull(Field[,] fields)
     {
         var sb = new System.Text.StringBuilder();
 
-        for (int x=1; x<9; x++)
-            for (int y=1; y<9; y++)
+        for (int x=1; x<=1; x++)
+            for (int y=1; y<=1; y++)
             {
                 sb.Append(x + " " + y + "    " + fields[x, y].number + "    ");
                 foreach (int test in fields[x,y].potential)
@@ -81,6 +89,7 @@ class Sudoku
             }
 
         sb.Append("-------\r\n");
-        File.AppendAllText(@"C:\Users\u540929\OneDrive - Lufthansa Group\johann\TL\Programming\Test\working.txt", sb.ToString());
+        //File.AppendAllText(@"working.txt", sb.ToString());
+        Console.WriteLine(sb.ToString());
     }
 }
