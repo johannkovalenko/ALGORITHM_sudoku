@@ -49,52 +49,61 @@ class Sudoku
 
         bool earlyExit;
 
-        PrintPotential(3, 2);
+        PrintPotentialFull();
 
         new Strategies.Strategy1().Run(blockforfield, sudokufield, potential, potentialblock);
         //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotential(3, 2);
+        PrintPotentialFull();
             
         new Strategies.Strategy2().Run(sudokufield, potential, fieldsperblock, IntListArr);
         //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotential(3, 2);
+        PrintPotentialFull();
 
         new Strategies.Strategy3().Run(blockforfield, sudokufield, potential, fieldsperblock, IntListArr);
         //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotential(3, 2);
+        PrintPotentialFull();
 
         earlyExit = new Strategies.Strategy4().Run(sudokufield, potential, ref globalcnt);
         //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotential(3, 2);
+        PrintPotentialFull();
 
         if (earlyExit) return true;
 
         earlyExit = new Strategies.Strategy5().Run(sudokufield, potential, potentialblock, furtherinfluencingblocks, ref globalcnt);
         //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotential(3, 2);
+        PrintPotentialFull();
 
         if (earlyExit) return true;
         
         earlyExit = new Strategies.Strategy6().Run(blockforfield, sudokufield, potential, fieldsperblock, ref globalcnt);
         //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotential(3, 2);
+        PrintPotentialFull();
 
         if (earlyExit) return true;
 
         earlyExit = new Strategies.Strategy7().Run(sudokufield, potential, fieldsperblock, ref globalcnt);
         //new OutputData.Sudoku().SaveInTxt(sudokufield, "working.txt");
-        PrintPotential(3, 2);
+        PrintPotentialFull();
 
         if (earlyExit) return true;
 
         return false;
     }
 
-    private static void PrintPotential(int x, int y)
+    private static void PrintPotentialFull()
     {
-        Console.Write(x + " " + y + "\t" + sudokufield[x, y] + "\t");
-        foreach (int test in potential[x,y])
-            Console.Write(test + " ");
-        Console.WriteLine();
+        var sb = new System.Text.StringBuilder();
+
+        for (int x=1; x<9; x++)
+            for (int y=1; y<9; y++)
+            {
+                sb.Append(x + " " + y + "    " + sudokufield[x, y] + "    ");
+                foreach (int test in potential[x,y])
+                    sb.Append(test + " ");
+                sb.Append("\r\n");        
+            }
+
+        sb.Append("-------\r\n");
+        File.AppendAllText(@"C:\Users\u540929\OneDrive - Lufthansa Group\johann\TL\Programming\Test\working.txt", sb.ToString());
     }
 }
