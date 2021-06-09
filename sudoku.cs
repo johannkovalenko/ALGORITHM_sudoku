@@ -6,9 +6,8 @@ using System.Diagnostics;
 
 class Sudoku
 {
-    private static List<List<int>> potentialblock = new List<List<int>>(); //Potential for each block
-    private static List<int[]>[] fieldsperblock = new List<int[]>[28]; //
-
+    private static List<List<int>> potentialblock = new List<List<int>>();
+    private static List<int[]>[] fieldsperblock = new List<int[]>[28];
 
     private static OutputData.Sudoku outputData = new OutputData.Sudoku();
 
@@ -16,7 +15,7 @@ class Sudoku
     {
         var stopwatch   = new Stopwatch();
         var fields      = new Field[10, 10];
-        var strategy    = new Strategy();
+        var strategy    = new Strategy(fields, potentialblock, fieldsperblock);
 
         stopwatch.Start();
 
@@ -58,20 +57,20 @@ class Sudoku
     {
         bool found;
 
-        strategy.one.Run(fields, potentialblock);
-        strategy.two.Run(fields, fieldsperblock);
-        strategy.three.Run(fields, fieldsperblock);
+        strategy.one.Run();
+        strategy.two.Run();
+        strategy.three.Run();
         
-        found = strategy.four.Run(fields);
+        found = strategy.four.Run();
         if (found) return true;
 
-        found = strategy.five.Run(fields, potentialblock);
+        found = strategy.five.Run();
         if (found) return true;
         
-        found = strategy.six.Run(fields, fieldsperblock);
+        found = strategy.six.Run();
         if (found) return true;
 
-        found = strategy.seven.Run(fields, fieldsperblock);
+        found = strategy.seven.Run();
         if (found) return true;
     
         return false;

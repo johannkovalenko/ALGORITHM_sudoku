@@ -4,7 +4,14 @@ namespace Strategies
 {
     public class Strategy4
     {
-        public bool Run(Field[,] fields)
+        private Field[,] fields;
+
+        public Strategy4(Field[,] fields)
+        {
+            this.fields = fields;
+        }
+
+        public bool Run()
         {
             for (int i=1;i<=9;i++)
                 for (int j=1;j<=9;j++)

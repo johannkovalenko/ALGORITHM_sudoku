@@ -4,44 +4,53 @@ namespace Strategies
 {
     public class Strategy3
     {
-        public void Run(Field[,] fields, List<int[]>[] fieldsperblock)
+        private Field[,] fields;
+        private List<int[]>[] fieldsperblock;
+
+        public Strategy3(Field[,] fields, List<int[]>[] fieldsperblock)
+        {
+            this.fields = fields;
+            this.fieldsperblock = fieldsperblock;
+        }
+
+        public void Run()
         {
             for (int i=1;i<=9;i++)
                 for (int j=1; j<=7; j+=3)
                 {
-                    SubProcedureHorizontal(ref i, ref j, fields, fieldsperblock);
-                    SubProcedureVertical(ref i, ref j, fields, fieldsperblock);
+                    SubProcedureHorizontal(ref i, ref j);
+                    SubProcedureVertical(ref i, ref j);
                 }
         }
 
-        private void SubProcedureHorizontal(ref int i, ref int j, Field[,] fields, List<int[]>[] fieldsperblock)
+        private void SubProcedureHorizontal(ref int i, ref int j)
         {
             var IntListArr = new List<int[]>();
 
-            Horizontal0(ref i, ref j, fields, IntListArr);
+            Horizontal0(ref i, ref j, IntListArr);
 
             if (!(IntListArr.Count == 2 && IntListArr[0][0] == IntListArr[1][0] && IntListArr[0][1] == IntListArr[1][1]))
                 return;
 
-            Horizontal1(ref i, ref j, IntListArr, fieldsperblock, fields);
-            Horizontal2(ref i, ref j, fields, IntListArr);
+            Horizontal1(ref i, ref j, IntListArr);
+            Horizontal2(ref i, ref j, IntListArr);
         }
 
 
-        private void SubProcedureVertical(ref int i, ref int j, Field[,] fields, List<int[]>[] fieldsperblock)
+        private void SubProcedureVertical(ref int i, ref int j)
         {
             var IntListArr = new List<int[]>();
 
-            Vertical0(ref i, ref j, fields, IntListArr);
+            Vertical0(ref i, ref j, IntListArr);
 
             if (!(IntListArr.Count == 2 && IntListArr[0][0] == IntListArr[1][0] && IntListArr[0][1] == IntListArr[1][1]))
                 return;
             
-            Vertical1(ref i, ref j, IntListArr, fieldsperblock, fields);
-            Vertical2(ref i, ref j, fields, IntListArr);
+            Vertical1(ref i, ref j, IntListArr);
+            Vertical2(ref i, ref j, IntListArr);
         }
 
-        private void Horizontal0(ref int i, ref int j, Field[,] fields, List<int[]> IntListArr)
+        private void Horizontal0(ref int i, ref int j, List<int[]> IntListArr)
         {
             for (int m=j;m<=j+2;m++)
             {
@@ -52,7 +61,7 @@ namespace Strategies
             }
         }
 
-        private void Horizontal1(ref int i, ref int j, List<int[]> IntListArr, List<int[]>[] fieldsperblock, Field[,] fields)
+        private void Horizontal1(ref int i, ref int j, List<int[]> IntListArr)
         {
             int[] blockarr = fields[i,j].block;
             
@@ -65,7 +74,7 @@ namespace Strategies
 
         }
 
-        private void Horizontal2(ref int i, ref int j, Field[,] fields, List<int[]> IntListArr)
+        private void Horizontal2(ref int i, ref int j, List<int[]> IntListArr)
         {
             for (int l=1; l<=9; l++)
                 if (l!=j && l!=j+1 && l!= j+2)
@@ -75,7 +84,7 @@ namespace Strategies
                 }
         }
 
-        private void Vertical0(ref int i, ref int j, Field[,] fields, List<int[]> IntListArr)
+        private void Vertical0(ref int i, ref int j, List<int[]> IntListArr)
         {
             for (int m=j;m<=j+2;m++)
             {
@@ -85,7 +94,7 @@ namespace Strategies
             }
         }
 
-        private void Vertical1(ref int i, ref int j, List<int[]> IntListArr, List<int[]>[] fieldsperblock, Field[,] fields)
+        private void Vertical1(ref int i, ref int j, List<int[]> IntListArr)
         {
             int[] blockarr = fields[j,i].block;
             
@@ -97,7 +106,7 @@ namespace Strategies
                 }
         }
 
-        private void Vertical2(ref int i, ref int j, Field[,] fields, List<int[]> IntListArr)
+        private void Vertical2(ref int i, ref int j, List<int[]> IntListArr)
         {
             for (int l = 1; l <=9; l++)
                 if (l != j && l != j+1 && l!= j+2)

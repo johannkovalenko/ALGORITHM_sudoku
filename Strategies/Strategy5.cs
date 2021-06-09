@@ -5,6 +5,14 @@ namespace Strategies
 {
     public class Strategy5
     {
+        private Field[,] fields;
+        private List<List<int>> potentialblock;
+
+        public Strategy5(Field[,] fields, List<List<int>> potentialblock)
+        {
+            this.fields = fields;
+            this.potentialblock = potentialblock;
+        }
         private class Coordinates
         {
             public int x;
@@ -17,7 +25,7 @@ namespace Strategies
             }
         }
 
-        public bool Run(Field[,] fields, List<List<int>> potentialblock)
+        public bool Run()
         {
             var BorderingBlock = new List<Coordinates>();
             
@@ -32,9 +40,9 @@ namespace Strategies
                         BorderingBlock.Clear();
     
                         Task1(ref i, ref j, k, l, BorderingBlock);
-                        Task2(ref i, ref j, a, potentialblock, BorderingBlock, fields);
+                        Task2(ref i, ref j, a, BorderingBlock);
 
-                        if (!Task3(BorderingBlock, fields))
+                        if (!Task3(BorderingBlock))
                         {
                             fields[i,j].number = a;
                             fields[i,j].potential.Clear();
@@ -54,7 +62,7 @@ namespace Strategies
                         BorderingBlock.Add(new Coordinates(m,n));
         }
 
-        private void Task2(ref int i, ref int j, int a, List<List<int>> potentialblock, List<Coordinates> BorderingBlock, Field[,] fields)
+        private void Task2(ref int i, ref int j, int a, List<Coordinates> BorderingBlock)
         {
             foreach (int b in fields[i,j].furtherinfluencingblocks)
                 if (!potentialblock[b].Contains(a))
@@ -69,7 +77,7 @@ namespace Strategies
                         }
         }
 
-        private bool Task3(List<Coordinates> BorderingBlock, Field[,] fields)
+        private bool Task3(List<Coordinates> BorderingBlock)
         {
             foreach (Coordinates c in BorderingBlock)
                 if (c != null && fields[c.x, c.y].number == 0)

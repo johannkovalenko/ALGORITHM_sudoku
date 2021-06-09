@@ -5,7 +5,16 @@ namespace Strategies
 {
     public class Strategy7
     {
-        public bool Run(Field[,] fields, List<int[]>[] fieldsperblock)
+        private Field[,] fields;
+        private List<int[]>[] fieldsperblock;
+
+        public Strategy7(Field[,] fields, List<int[]>[] fieldsperblock)
+        {
+            this.fields = fields;
+            this.fieldsperblock = fieldsperblock;
+        }
+
+        public bool Run()
         {
             for (int i=1;i<=27;i++)
                 for (int o=1;o<=9;o++)

@@ -5,7 +5,16 @@ namespace Strategies
 {
     public class Strategy6
     {
-        public bool Run(Field[,] fields, List<int[]>[] fieldsperblock)
+        private Field[,] fields;
+        private List<int[]>[] fieldsperblock;
+
+        public Strategy6(Field[,] fields, List<int[]>[] fieldsperblock)
+        {
+            this.fields = fields;
+            this.fieldsperblock = fieldsperblock;
+        }
+
+        public bool Run()
         {           
             var howoften = new Dictionary<int,int>();
 

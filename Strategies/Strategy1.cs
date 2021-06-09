@@ -4,8 +4,17 @@ using System.Collections.Generic;
 namespace Strategies
 {
     public class Strategy1
-    {            
-        public void Run(Field[,] fields, List<List<int>> potentialblock)
+    {   
+        private Field[,] fields;
+        private List<List<int>> potentialblock;
+
+        public Strategy1(Field[,] fields, List<List<int>> potentialblock)
+        {
+            this.fields = fields;
+            this.potentialblock = potentialblock;
+        }
+
+        public void Run()
         {
             for (int row=1; row<=9; row++)
                 for (int col=1; col<=9; col++)
@@ -13,14 +22,14 @@ namespace Strategies
                     if (fields[row, col].number == 0)
                         continue;
 
-                    UnknownActivity_RemovePotential(ref row, ref col, potentialblock, fields, fields[row, col]);
-                    RemovePotentialForAllFieldsInBlock(ref row, ref col, fields, fields[row, col]);
-                    RemovePotentialForAllFieldsInRow(ref row, fields, fields[row, col]);
-                    RemovePotentialForAllFieldsInCol(ref col, fields, fields[row, col]);
+                    UnknownActivity_RemovePotential(ref row, ref col, fields[row, col]);
+                    RemovePotentialForAllFieldsInBlock(ref row, ref col, fields[row, col]);
+                    RemovePotentialForAllFieldsInRow(ref row, fields[row, col]);
+                    RemovePotentialForAllFieldsInCol(ref col, fields[row, col]);
                 }
         }
 
-        private void UnknownActivity_RemovePotential(ref int row, ref int col, List<List<int>> potentialblock, Field[,] fields, Field currentField)
+        private void UnknownActivity_RemovePotential(ref int row, ref int col, Field currentField)
         {
             foreach (int a in fields[row,col].block)
             {
@@ -30,7 +39,7 @@ namespace Strategies
             }
         }
 
-        private void RemovePotentialForAllFieldsInBlock(ref int row, ref int col, Field[,] fields, Field currentField)
+        private void RemovePotentialForAllFieldsInBlock(ref int row, ref int col, Field currentField)
         {
             int rowBlock = row - (row - 1) % 3;
             int colBlock = col - (col - 1) % 3;
@@ -44,7 +53,7 @@ namespace Strategies
                 }
         }
 
-        private void RemovePotentialForAllFieldsInRow(ref int row, Field[,] fields, Field currentField)
+        private void RemovePotentialForAllFieldsInRow(ref int row, Field currentField)
         {
             for (int i=1; i<=9; i++)
             {               
@@ -55,7 +64,7 @@ namespace Strategies
 
         }
 
-        private void RemovePotentialForAllFieldsInCol(ref int col, Field[,] fields, Field currentField)
+        private void RemovePotentialForAllFieldsInCol(ref int col, Field currentField)
         {
             for (int i=1; i<=9; i++)
             {                    
