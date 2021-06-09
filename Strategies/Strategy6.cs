@@ -6,21 +6,22 @@ namespace Strategies
     public class Strategy6
     {
         public bool Run(Field[,] fields, List<int[]>[] fieldsperblock)
-        {
-            int value;
-            
+        {           
+            var howoften = new Dictionary<int,int>();
+
             for (int i=1;i<=9;i++)
                 for (int j=1;j<=9;j++)
                 {
-                    var howoften = new Dictionary<int,int>();
+                    howoften.Clear();
+                            
                     foreach (int blockno in fields[i,j].block)
                     {
                         foreach (int[] koors in fieldsperblock[blockno])
                             foreach (int number in fields[koors[0],koors[1]].potential)
-                                if (howoften.TryGetValue(number, out value))
-                                    howoften[number] = value + 1;
+                                if (howoften.ContainsKey(number))
+                                    howoften[number]++;
                                 else
-                                    howoften.Add(number,1);
+                                    howoften.Add(number, 1);
 
                         foreach (int ky in howoften.Keys)
                             if (howoften[ky] == 1 && fields[i,j].potential.Contains(ky))

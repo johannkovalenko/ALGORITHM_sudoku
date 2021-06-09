@@ -23,19 +23,19 @@ class Sudoku
 
     
         int twotimesnothing = 0;
-        int globalcnt = 0;
+        int totalFound = 0;
 
-        new InputData.Sudoku().ReadOut(fields, ref globalcnt);
+        new InputData.Sudoku().ReadOut(fields, ref totalFound);
         new Strategies.Preparation().Run(fields, potentialblock, fieldsperblock);
         new OutputData.Sudoku().Print(fields);
 
-        while(globalcnt <81 && twotimesnothing < 2)
+        while(totalFound <81 && twotimesnothing < 2)
         {
-            bool earlyExit = Sudoku.ReducePot(fields);
+            bool found = Sudoku.ReducePot(fields);
 
-            if (earlyExit)
+            if (found)
             {
-                globalcnt++;
+                totalFound++;
                 twotimesnothing = 0; 
             }
             else 
@@ -55,23 +55,23 @@ class Sudoku
     public static bool ReducePot(Field[,] fields)
     {
 
-        bool earlyExit;
+        bool found;
 
         new Strategies.Strategy1().Run(fields, potentialblock);
         new Strategies.Strategy2().Run(fields, fieldsperblock);
         new Strategies.Strategy3().Run(fields, fieldsperblock);
         
-        earlyExit = new Strategies.Strategy4().Run(fields);
-        if (earlyExit) return true;
+        found = new Strategies.Strategy4().Run(fields);
+        if (found) return true;
 
-        earlyExit = new Strategies.Strategy5().Run(fields, potentialblock);
-        if (earlyExit) return true;
+        found = new Strategies.Strategy5().Run(fields, potentialblock);
+        if (found) return true;
         
-        earlyExit = new Strategies.Strategy6().Run(fields, fieldsperblock);
-        if (earlyExit) return true;
+        found = new Strategies.Strategy6().Run(fields, fieldsperblock);
+        if (found) return true;
 
-        earlyExit = new Strategies.Strategy7().Run(fields, fieldsperblock);
-        if (earlyExit) return true;
+        found = new Strategies.Strategy7().Run(fields, fieldsperblock);
+        if (found) return true;
     
         return false;
     }
