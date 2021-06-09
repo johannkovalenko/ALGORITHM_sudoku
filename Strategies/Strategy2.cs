@@ -5,9 +5,9 @@ namespace Strategies
     public class Strategy2
     {
         private Field[,] fields;
-        private List<int[]>[] fieldsperblock;
+        private List<Coordinates>[] fieldsperblock;
 
-        public Strategy2(Field[,] fields, List<int[]>[] fieldsperblock)
+        public Strategy2(Field[,] fields, List<Coordinates>[] fieldsperblock)
         {
             this.fields = fields;
             this.fieldsperblock = fieldsperblock;
@@ -32,9 +32,9 @@ namespace Strategies
         {
             var IntListArr = new List<int[]>();
 
-            foreach (int[] kk in fieldsperblock[i])
-                if (fields[kk[0],kk[1]].potential.Contains(j))
-                    IntListArr.Add(new int[] {kk[0],kk[1]});
+            foreach (Coordinates kk in fieldsperblock[i])
+                if (fields[kk.x, kk.y].potential.Contains(j))
+                    IntListArr.Add(new int[] {kk.x, kk.y});
 
             return IntListArr;
         }

@@ -13,17 +13,6 @@ namespace Strategies
             this.fields = fields;
             this.potentialblock = potentialblock;
         }
-        private class Coordinates
-        {
-            public int x;
-            public int y;
-
-            public Coordinates(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-            }
-        }
 
         public bool Run()
         {

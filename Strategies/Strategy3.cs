@@ -5,9 +5,9 @@ namespace Strategies
     public class Strategy3
     {
         private Field[,] fields;
-        private List<int[]>[] fieldsperblock;
+        private List<Coordinates>[] fieldsperblock;
 
-        public Strategy3(Field[,] fields, List<int[]>[] fieldsperblock)
+        public Strategy3(Field[,] fields, List<Coordinates>[] fieldsperblock)
         {
             this.fields = fields;
             this.fieldsperblock = fieldsperblock;
@@ -65,11 +65,11 @@ namespace Strategies
         {
             int[] blockarr = fields[i,j].block;
             
-            foreach (int[] n in fieldsperblock[blockarr[2]])
-                if (n[0] != i)
+            foreach (Coordinates n in fieldsperblock[blockarr[2]])
+                if (n.x != i)
                 {
-                    fields[n[0],n[1]].potential.Remove(IntListArr[0][0]);
-                    fields[n[0],n[1]].potential.Remove(IntListArr[0][1]); 
+                    fields[n.x, n.y].potential.Remove(IntListArr[0][0]);
+                    fields[n.x, n.y].potential.Remove(IntListArr[0][1]); 
                 }
 
         }
@@ -98,11 +98,11 @@ namespace Strategies
         {
             int[] blockarr = fields[j,i].block;
             
-            foreach (int[] n in fieldsperblock[blockarr[2]])
-                if (n[1] != i)
+            foreach (Coordinates n in fieldsperblock[blockarr[2]])
+                if (n.y != i)
                 {
-                    fields[n[0],n[1]].potential.Remove(IntListArr[0][0]);
-                    fields[n[0],n[1]].potential.Remove(IntListArr[0][1]); 
+                    fields[n.x, n.y].potential.Remove(IntListArr[0][0]);
+                    fields[n.x, n.y].potential.Remove(IntListArr[0][1]); 
                 }
         }
 

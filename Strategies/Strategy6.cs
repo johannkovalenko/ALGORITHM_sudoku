@@ -6,9 +6,9 @@ namespace Strategies
     public class Strategy6
     {
         private Field[,] fields;
-        private List<int[]>[] fieldsperblock;
+        private List<Coordinates>[] fieldsperblock;
 
-        public Strategy6(Field[,] fields, List<int[]>[] fieldsperblock)
+        public Strategy6(Field[,] fields, List<Coordinates>[] fieldsperblock)
         {
             this.fields = fields;
             this.fieldsperblock = fieldsperblock;
@@ -25,8 +25,8 @@ namespace Strategies
                             
                     foreach (int blockno in fields[i,j].block)
                     {
-                        foreach (int[] koors in fieldsperblock[blockno])
-                            foreach (int number in fields[koors[0],koors[1]].potential)
+                        foreach (Coordinates koors in fieldsperblock[blockno])
+                            foreach (int number in fields[koors.x, koors.y].potential)
                                 if (howoften.ContainsKey(number))
                                     howoften[number]++;
                                 else

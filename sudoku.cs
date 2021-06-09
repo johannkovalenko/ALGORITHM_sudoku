@@ -3,16 +3,14 @@ using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-
 class Sudoku
 {
-    private static List<List<int>> potentialblock = new List<List<int>>();
-    private static List<int[]>[] fieldsperblock = new List<int[]>[28];
-
-    private static OutputData.Sudoku outputData = new OutputData.Sudoku();
-
     public static void Main()
     {
+        var potentialblock = new List<List<int>>();
+        var fieldsperblock = new List<Coordinates>[28];
+        var outputData = new OutputData.Sudoku();
+
         var stopwatch   = new Stopwatch();
         var fields      = new Field[10, 10];
         var strategy    = new Strategy(fields, potentialblock, fieldsperblock);

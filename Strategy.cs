@@ -10,7 +10,7 @@ class Strategy
     public Strategies.Strategy6 six;
     public Strategies.Strategy7 seven;
 
-    public Strategy(Field[,] fields, List<List<int>> potentialblock, List<int[]>[] fieldsperblock)
+    public Strategy(Field[,] fields, List<List<int>> potentialblock, List<Coordinates>[] fieldsperblock)
     {
         one     = new Strategies.Strategy1(fields, potentialblock);
         two     = new Strategies.Strategy2(fields, fieldsperblock);
