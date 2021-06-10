@@ -5,21 +5,21 @@ namespace Strategies
 {
     public class Preparation
     {
-        public void Run(Field[,] fields, List<List<int>> potentialblock, List<Coordinates>[] fieldsperblock)
+        public void Run(Field[,] fields, Block block)
         {
             var block19to27= new Dictionary<string,int>();
 
-            Task1(fieldsperblock, block19to27);
-            Task2(fields, potentialblock, fieldsperblock, block19to27);
+            Task1(block, block19to27);
+            Task2(fields, block, block19to27);
 
-            // for(int a=0; a<fieldsperblock.Length; a++)
-            //     if (fieldsperblock[a] != null)
-            //         foreach (int[] b in fieldsperblock[a])
+            // for(int a=0; a<block.fields.Length; a++)
+            //     if (block.fields[a] != null)
+            //         foreach (int[] b in block.fields[a])
             //             if (b != null)
             //                 Console.WriteLine(a + "\t\t" + b[0] + " " + b[1]);
         }
 
-        private void Task1(List<Coordinates>[] fieldsperblock, Dictionary<string,int> block19to27)
+        private void Task1(Block block, Dictionary<string,int> block19to27)
         {
             int cnt = 19;
 
@@ -31,14 +31,14 @@ namespace Strategies
                         for (int l=j; l<=j+2;l++)
                             FieldKoorBlock.Add(new Coordinates(k,l));
 
-                    fieldsperblock[cnt] = FieldKoorBlock;
+                    block.fields[cnt] = FieldKoorBlock;
 
                     block19to27[String.Format("{0}{1}",i,j)] = cnt;
                     cnt++;
                 }
         }
 
-        private void Task2(Field[,] fields, List<List<int>> potentialblock, List<Coordinates>[] fieldsperblock, Dictionary<string,int> block19to27)
+        private void Task2(Field[,] fields, Block block, Dictionary<string,int> block19to27)
         {
             var FullPot = new List<int>(new int[]{1,2,3,4,5,6,7,8,9});
 
@@ -73,12 +73,12 @@ namespace Strategies
                     FieldKoorVert.Add(new Coordinates(j,i));
                 }
 
-                fieldsperblock[i] = FieldKoorHori;
-                fieldsperblock[i+9] = FieldKoorVert;
+                block.fields[i] = FieldKoorHori;
+                block.fields[i+9] = FieldKoorVert;
             }
 
             for (int i=0;i<=27;i++)
-                potentialblock.Add(FullPot);
+                block.potential.Add(FullPot);
         }
     }
 }

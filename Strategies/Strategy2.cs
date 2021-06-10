@@ -5,12 +5,12 @@ namespace Strategies
     public class Strategy2
     {
         private Field[,] fields;
-        private List<Coordinates>[] fieldsperblock;
+        private Block block;
 
-        public Strategy2(Field[,] fields, List<Coordinates>[] fieldsperblock)
+        public Strategy2(Field[,] fields, Block block)
         {
             this.fields = fields;
-            this.fieldsperblock = fieldsperblock;
+            this.block = block;
         }
 
         public void Run()
@@ -32,7 +32,7 @@ namespace Strategies
         {
             var IntListArr = new List<Coordinates>();
 
-            foreach (Coordinates kk in fieldsperblock[i])
+            foreach (Coordinates kk in block.fields[i])
                 if (fields[kk.x, kk.y].potential.Contains(j))
                     IntListArr.Add(new Coordinates(kk.x, kk.y));
 

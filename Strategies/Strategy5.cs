@@ -6,12 +6,12 @@ namespace Strategies
     public class Strategy5
     {
         private Field[,] fields;
-        private List<List<int>> potentialblock;
+        private Block block;
 
-        public Strategy5(Field[,] fields, List<List<int>> potentialblock)
+        public Strategy5(Field[,] fields, Block block)
         {
             this.fields = fields;
-            this.potentialblock = potentialblock;
+            this.block = block;
         }
 
         public bool Run()
@@ -54,7 +54,7 @@ namespace Strategies
         private void Task2(ref int i, ref int j, int a, List<Coordinates> BorderingBlock)
         {
             foreach (int b in fields[i,j].furtherinfluencingblocks)
-                if (!potentialblock[b].Contains(a))
+                if (!block.potential[b].Contains(a))
                     for (int c = 0; c < BorderingBlock.Count; c++)
                         if (BorderingBlock[c] != null)
                         {

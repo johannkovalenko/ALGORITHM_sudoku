@@ -6,12 +6,12 @@ namespace Strategies
     public class Strategy1
     {   
         private Field[,] fields;
-        private List<List<int>> potentialblock;
+        private Block block;
 
-        public Strategy1(Field[,] fields, List<List<int>> potentialblock)
+        public Strategy1(Field[,] fields, Block block)
         {
             this.fields = fields;
-            this.potentialblock = potentialblock;
+            this.block = block;
         }
 
         public void Run()
@@ -33,9 +33,9 @@ namespace Strategies
         {
             foreach (int a in fields[row,col].block)
             {
-                var IntList = new List<int>(potentialblock[a]);
+                var IntList = new List<int>(block.potential[a]);
                 IntList.Remove(currentField.number);
-                potentialblock[a] = IntList;
+                block.potential[a] = IntList;
             }
         }
 

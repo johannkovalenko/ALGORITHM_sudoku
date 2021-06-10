@@ -5,12 +5,12 @@ namespace Strategies
     public class Strategy3
     {
         private Field[,] fields;
-        private List<Coordinates>[] fieldsperblock;
+        private Block block;
 
-        public Strategy3(Field[,] fields, List<Coordinates>[] fieldsperblock)
+        public Strategy3(Field[,] fields, Block block)
         {
             this.fields = fields;
-            this.fieldsperblock = fieldsperblock;
+            this.block = block;
         }
 
         public void Run()
@@ -60,8 +60,8 @@ namespace Strategies
         private void Horizontal1(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             int[] blockarr = fields[i,j].block;
-            
-            foreach (Coordinates coordinates in fieldsperblock[blockarr[2]])
+
+            foreach (Coordinates coordinates in block.fields[blockarr[2]])
                 if (coordinates.x != i)
                 {
                     fields[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
@@ -90,7 +90,7 @@ namespace Strategies
         {
             int[] blockarr = fields[j,i].block;
             
-            foreach (Coordinates n in fieldsperblock[blockarr[2]])
+            foreach (Coordinates n in block.fields[blockarr[2]])
                 if (n.y != i)
                 {
                     fields[n.x, n.y].potential.Remove(IntListArr[0].x);

@@ -7,13 +7,13 @@ class Sudoku
 {
     public static void Main()
     {
-        var potentialblock = new List<List<int>>();
-        var fieldsperblock = new List<Coordinates>[28];
         var outputData = new OutputData.Sudoku();
 
         var stopwatch   = new Stopwatch();
         var fields      = new Field[10, 10];
-        var strategy    = new Strategy(fields, potentialblock, fieldsperblock);
+        var block       = new Block();
+        var strategy    = new Strategy(fields, block);
+        
 
         stopwatch.Start();
 
@@ -25,7 +25,7 @@ class Sudoku
         int totalFound = 0;
 
         new InputData.Sudoku().ReadOut(fields, ref totalFound);
-        new Strategies.Preparation().Run(fields, potentialblock, fieldsperblock);
+        new Strategies.Preparation().Run(fields, block);
         outputData.Print(fields);
 
         while(totalFound <81 && twotimesnothing < 2)
