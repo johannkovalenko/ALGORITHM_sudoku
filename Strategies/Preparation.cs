@@ -64,7 +64,9 @@ namespace Strategies
                     
                     fields[i,j].furtherinfluencingblocks = influencinglist;
                     
-                    fields[i,j].block = new int[] {i, j+9, block19to27[String.Format("{0}{1}",k,l)]};
+                    fields[i, j].blocknumber.horizontal = i;
+                    fields[i, j].blocknumber.vertical   = j + 9;
+                    fields[i, j].blocknumber.square = block19to27[String.Format("{0}{1}",k,l)];
                     
                     if (fields[i,j].number == 0)
                         fields[i,j].potential = FullPot;
@@ -78,7 +80,7 @@ namespace Strategies
             }
 
             for (int i=0;i<=27;i++)
-                block.potential.Add(FullPot);
+                block.potential[i] = FullPot;
         }
     }
 }

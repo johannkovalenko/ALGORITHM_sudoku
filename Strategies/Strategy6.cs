@@ -23,23 +23,35 @@ namespace Strategies
                 {
                     howoften.Clear();
                             
-                    foreach (int blockno in fields[i,j].block)
-                    {
-                        foreach (Coordinates koors in block.fields[blockno])
-                            foreach (int number in fields[koors.x, koors.y].potential)
-                                if (howoften.ContainsKey(number))
-                                    howoften[number]++;
-                                else
-                                    howoften.Add(number, 1);
+                    if (Task0(ref i, ref j, fields[i,j].blocknumber.square, howoften))
+                        return true;
 
-                        foreach (int ky in howoften.Keys)
-                            if (howoften[ky] == 1 && fields[i,j].potential.Contains(ky))
-                            {
-                                fields[i,j].number = ky;
-                                fields[i,j].potential.Clear();
-                                return true;
-                            }
-                    } 
+                    if (Task0(ref i, ref j, fields[i,j].blocknumber.horizontal, howoften))
+                        return true;
+
+                    if (Task0(ref i, ref j, fields[i,j].blocknumber.vertical, howoften))
+                        return true;
+
+                }
+
+            return false;
+        }
+
+        private bool Task0(ref int i, ref int j, int blockno, Dictionary<int,int> howoften)
+        {
+            foreach (Coordinates koors in block.fields[blockno])
+                foreach (int number in fields[koors.x, koors.y].potential)
+                    if (howoften.ContainsKey(number))
+                        howoften[number]++;
+                    else
+                        howoften.Add(number, 1);
+
+            foreach (int ky in howoften.Keys)
+                if (howoften[ky] == 1 && fields[i,j].potential.Contains(ky))
+                {
+                    fields[i,j].number = ky;
+                    fields[i,j].potential.Clear();
+                    return true;
                 }
 
             return false;

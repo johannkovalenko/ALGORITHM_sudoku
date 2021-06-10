@@ -31,12 +31,17 @@ namespace Strategies
 
         private void UnknownActivity_RemovePotential(ref int row, ref int col, Field currentField)
         {
-            foreach (int a in fields[row,col].block)
-            {
-                var IntList = new List<int>(block.potential[a]);
-                IntList.Remove(currentField.number);
-                block.potential[a] = IntList;
-            }
+            var IntList = new List<int>(block.potential[fields[row,col].blocknumber.square]);
+            IntList.Remove(currentField.number);
+            block.potential[fields[row,col].blocknumber.square] = IntList;
+
+            IntList = new List<int>(block.potential[fields[row,col].blocknumber.horizontal]);
+            IntList.Remove(currentField.number);
+            block.potential[fields[row,col].blocknumber.horizontal] = IntList;
+
+            IntList = new List<int>(block.potential[fields[row,col].blocknumber.vertical]);
+            IntList.Remove(currentField.number);
+            block.potential[fields[row,col].blocknumber.vertical] = IntList;
         }
 
         private void RemovePotentialForAllFieldsInBlock(ref int row, ref int col, Field currentField)
