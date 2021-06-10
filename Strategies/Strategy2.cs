@@ -15,7 +15,7 @@ namespace Strategies
 
         public void Run()
         {
-            for (int i=19;i<=27;i++)
+            for (int i=1;i<=9;i++)
                 for (int j=1;j<=9;j++)
                 {
                     var IntListArr = SubTask0(ref i, ref j);
@@ -32,7 +32,7 @@ namespace Strategies
         {
             var IntListArr = new List<Coordinates>();
 
-            foreach (Coordinates kk in block.fields[i])
+            foreach (Coordinates kk in block.square.fields[i])
                 if (fields[kk.x, kk.y].potential.Contains(j))
                     IntListArr.Add(new Coordinates(kk.x, kk.y));
 

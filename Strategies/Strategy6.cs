@@ -23,7 +23,7 @@ namespace Strategies
                 {
                     howoften.Clear();
                             
-                    if (Task0(ref i, ref j, fields[i,j].blocknumber.square, howoften))
+                    if (Task0Square(ref i, ref j, fields[i,j].blocknumber.square, howoften))
                         return true;
 
                     if (Task0(ref i, ref j, fields[i,j].blocknumber.horizontal, howoften))
@@ -40,6 +40,26 @@ namespace Strategies
         private bool Task0(ref int i, ref int j, int blockno, Dictionary<int,int> howoften)
         {
             foreach (Coordinates koors in block.fields[blockno])
+                foreach (int number in fields[koors.x, koors.y].potential)
+                    if (howoften.ContainsKey(number))
+                        howoften[number]++;
+                    else
+                        howoften.Add(number, 1);
+
+            foreach (int ky in howoften.Keys)
+                if (howoften[ky] == 1 && fields[i,j].potential.Contains(ky))
+                {
+                    fields[i,j].number = ky;
+                    fields[i,j].potential.Clear();
+                    return true;
+                }
+
+            return false;
+        }
+
+        private bool Task0Square(ref int i, ref int j, int blockno, Dictionary<int,int> howoften)
+        {
+            foreach (Coordinates koors in block.square.fields[blockno])
                 foreach (int number in fields[koors.x, koors.y].potential)
                     if (howoften.ContainsKey(number))
                         howoften[number]++;

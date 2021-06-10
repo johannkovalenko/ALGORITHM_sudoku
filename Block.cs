@@ -2,12 +2,14 @@ using System.Collections.Generic;
 
 public class Block
 {
-    public List<int>[] potential = new List<int>[28];
-    public List<Coordinates>[] fields = new List<Coordinates>[28];
+    public List<int>[] potential = new List<int>[19];
+    public List<Coordinates>[] fields = new List<Coordinates>[19];
 
-    // public class Square
-    // {
-    //     public List<int>[] potential = new List<int>()[28];
-    //     public List<Coordinates>[] fields = new List<Coordinates>[28];
-    // }    
+    public Square square = new Square();
+
+    public class Square
+    {
+        public List<int>[] potential = new List<int>[10];
+        public List<Coordinates>[] fields = new List<Coordinates>[10];
+    }    
 }

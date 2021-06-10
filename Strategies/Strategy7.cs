@@ -16,17 +16,17 @@ namespace Strategies
 
         public bool Run()
         {
-            for (int i=1;i<=27;i++)
+            for (int i=1;i<=18;i++)
                 for (int o=1;o<=9;o++)
                     if (GetCount(ref i, ref o) == 1)
-                        foreach (Coordinates j in block.fields[i])
-                            if (fields[j.x, j.y].potential.Contains(o))
-                            {
-                                fields[j.x, j.y].number = o;
-                                fields[j.x, j.y].potential.Clear();
-                                return true;
-                            }
-
+                    {
+                        if (Task0(ref o, block.fields[i]))
+                            return true;
+                    
+                        if (i<=9)
+                            if (Task0(ref o, block.square.fields[i]))
+                                return true; 
+                    }
             return false;
         }
 
@@ -38,7 +38,27 @@ namespace Strategies
                     if (o == m)
                         cnt++;
 
+            if (i<=9)
+                foreach (Coordinates j in block.square.fields[i])
+                    foreach (int m in fields[j.x, j.y].potential)
+                        if (o == m)
+                            cnt++;            
+
             return cnt;
+        }
+
+        private bool Task0(ref int o, List<Coordinates> listCoordinates)
+        {
+            foreach (Coordinates j in listCoordinates)
+            
+                if (fields[j.x, j.y].potential.Contains(o))
+                {
+                    fields[j.x, j.y].number = o;
+                    fields[j.x, j.y].potential.Clear();
+                    return true;
+                }
+
+            return false;
         }
     }
 }

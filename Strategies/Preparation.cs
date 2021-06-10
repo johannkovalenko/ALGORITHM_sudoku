@@ -21,7 +21,7 @@ namespace Strategies
 
         private void Task1(Block block, Dictionary<string,int> block19to27)
         {
-            int cnt = 19;
+            int cnt = 1;
 
             for (int i=1;i<=7;i+=3)
                 for (int j=1;j<=7;j+=3)
@@ -31,7 +31,7 @@ namespace Strategies
                         for (int l=j; l<=j+2;l++)
                             FieldKoorBlock.Add(new Coordinates(k,l));
 
-                    block.fields[cnt] = FieldKoorBlock;
+                    block.square.fields[cnt] = FieldKoorBlock;
 
                     block19to27[String.Format("{0}{1}",i,j)] = cnt;
                     cnt++;
@@ -79,8 +79,11 @@ namespace Strategies
                 block.fields[i+9] = FieldKoorVert;
             }
 
-            for (int i=0;i<=27;i++)
+            for (int i=1;i<=18;i++)
                 block.potential[i] = FullPot;
+
+            for (int i=1;i<=9;i++)
+                block.square.potential[i] = FullPot;
         }
     }
 }
