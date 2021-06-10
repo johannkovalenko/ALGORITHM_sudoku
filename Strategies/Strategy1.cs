@@ -31,9 +31,9 @@ namespace Strategies
 
         private void UnknownActivity_RemovePotential(ref int row, ref int col, Field currentField)
         {
-            var IntList = new List<int>(block.potential[fields[row,col].blocknumber.square]);
+            var IntList = new List<int>(block.square.potential[fields[row,col].blocknumber.square]);
             IntList.Remove(currentField.number);
-            block.potential[fields[row,col].blocknumber.square] = IntList;
+            block.square.potential[fields[row,col].blocknumber.square] = IntList;
 
             IntList = new List<int>(block.potential[fields[row,col].blocknumber.horizontal]);
             IntList.Remove(currentField.number);
