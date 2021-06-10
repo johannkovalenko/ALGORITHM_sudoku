@@ -25,11 +25,11 @@ namespace Strategies
 
         private void SubProcedureHorizontal(ref int i, ref int j)
         {
-            var IntListArr = new List<int[]>();
+            var IntListArr = new List<Coordinates>();
 
             Horizontal0(ref i, ref j, IntListArr);
 
-            if (!(IntListArr.Count == 2 && IntListArr[0][0] == IntListArr[1][0] && IntListArr[0][1] == IntListArr[1][1]))
+            if (!(IntListArr.Count == 2 && IntListArr[0].x == IntListArr[1].x && IntListArr[0].y == IntListArr[1].y))
                 return;
 
             Horizontal1(ref i, ref j, IntListArr);
@@ -39,80 +39,72 @@ namespace Strategies
 
         private void SubProcedureVertical(ref int i, ref int j)
         {
-            var IntListArr = new List<int[]>();
+            var IntListArr = new List<Coordinates>();
 
             Vertical0(ref i, ref j, IntListArr);
 
-            if (!(IntListArr.Count == 2 && IntListArr[0][0] == IntListArr[1][0] && IntListArr[0][1] == IntListArr[1][1]))
+            if (!(IntListArr.Count == 2 && IntListArr[0].x == IntListArr[1].x && IntListArr[0].y == IntListArr[1].y))
                 return;
             
             Vertical1(ref i, ref j, IntListArr);
             Vertical2(ref i, ref j, IntListArr);
         }
 
-        private void Horizontal0(ref int i, ref int j, List<int[]> IntListArr)
+        private void Horizontal0(ref int i, ref int j, List<Coordinates> IntListArr)
         {
-            for (int m=j;m<=j+2;m++)
-            {
-                var IntList = fields[i,m].potential;
-                
-                if(IntList.Count == 2)
-                    IntListArr.Add(new int[]{IntList[0], IntList[1]});
-            }
+            for (int y=j; y<=j+2; y++)               
+                if (fields[i,y].potential.Count == 2)
+                    IntListArr.Add(new Coordinates(fields[i,y].potential[0], fields[i,y].potential[1]));
         }
 
-        private void Horizontal1(ref int i, ref int j, List<int[]> IntListArr)
+        private void Horizontal1(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             int[] blockarr = fields[i,j].block;
             
-            foreach (Coordinates n in fieldsperblock[blockarr[2]])
-                if (n.x != i)
+            foreach (Coordinates coordinates in fieldsperblock[blockarr[2]])
+                if (coordinates.x != i)
                 {
-                    fields[n.x, n.y].potential.Remove(IntListArr[0][0]);
-                    fields[n.x, n.y].potential.Remove(IntListArr[0][1]); 
+                    fields[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
+                    fields[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
                 }
-
         }
 
-        private void Horizontal2(ref int i, ref int j, List<int[]> IntListArr)
+        private void Horizontal2(ref int i, ref int j, List<Coordinates> IntListArr)
         {
-            for (int l=1; l<=9; l++)
-                if (l!=j && l!=j+1 && l!= j+2)
+            for (int y=1; y<=9; y++)
+                if (y!=j && y!=j+1 && y!= j+2)
                 {
-                    fields[i,l].potential.Remove(IntListArr[0][0]);
-                    fields[i,l].potential.Remove(IntListArr[0][1]);   
+                    fields[i,y].potential.Remove(IntListArr[0].x);
+                    fields[i,y].potential.Remove(IntListArr[0].y);   
                 }
         }
 
-        private void Vertical0(ref int i, ref int j, List<int[]> IntListArr)
+        private void Vertical0(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             for (int m=j;m<=j+2;m++)
-            {
-                var IntList = fields[m,i].potential;
-                if(IntList.Count == 2)
-                    IntListArr.Add(new int[]{IntList[0], IntList[1]});
-            }
+                if(fields[m,i].potential.Count == 2)
+                    IntListArr.Add(new Coordinates(fields[m,i].potential[0], fields[m,i].potential[1]));
         }
 
-        private void Vertical1(ref int i, ref int j, List<int[]> IntListArr)
+        private void Vertical1(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             int[] blockarr = fields[j,i].block;
             
             foreach (Coordinates n in fieldsperblock[blockarr[2]])
                 if (n.y != i)
                 {
-                    fields[n.x, n.y].potential.Remove(IntListArr[0][0]);
-                    fields[n.x, n.y].potential.Remove(IntListArr[0][1]); 
+                    fields[n.x, n.y].potential.Remove(IntListArr[0].x);
+                    fields[n.x, n.y].potential.Remove(IntListArr[0].y); 
                 }
         }
 
-        private void Vertical2(ref int i, ref int j, List<int[]> IntListArr)
+        private void Vertical2(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             for (int l = 1; l <=9; l++)
                 if (l != j && l != j+1 && l!= j+2)
                 {
-                    fields[l,i].potential.Remove(IntListArr[0][0]);
-                    fields[l,i].potential.Remove(IntListArr[0][1]);
+                    fields[l,i].potential.Remove(IntListArr[0].x);
+                    fields[l,i].potential.Remove(IntListArr[0].y);
                 }
         }
     }

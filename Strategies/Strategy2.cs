@@ -28,31 +28,31 @@ namespace Strategies
                 }
         }
 
-        private List<int[]> SubTask0(ref int i, ref int j)
+        private List<Coordinates> SubTask0(ref int i, ref int j)
         {
-            var IntListArr = new List<int[]>();
+            var IntListArr = new List<Coordinates>();
 
             foreach (Coordinates kk in fieldsperblock[i])
                 if (fields[kk.x, kk.y].potential.Contains(j))
-                    IntListArr.Add(new int[] {kk.x, kk.y});
+                    IntListArr.Add(new Coordinates(kk.x, kk.y));
 
             return IntListArr;
         }
 
-        private void SubTask1(List<int[]> IntListArr, ref int j)
+        private void SubTask1(List<Coordinates> IntListArr, ref int j)
         {
-            if (IntListArr[0][0] == IntListArr[1][0])
+            if (IntListArr[0].x == IntListArr[1].x)
                 for (int l = 1; l<=9; l++)
-                    if (l != IntListArr[0][1] && l != IntListArr[1][1])
-                        fields[IntListArr[0][0] ,l].potential.Remove(j); 
+                    if (l != IntListArr[0].y && l != IntListArr[1].y)
+                        fields[IntListArr[0].x ,l].potential.Remove(j); 
         }
 
-        private void SubTask2(List<int[]> IntListArr, ref int j)
+        private void SubTask2(List<Coordinates> IntListArr, ref int j)
         {
-            if (IntListArr[0][1] == IntListArr[1][1])
+            if (IntListArr[0].y == IntListArr[1].y)
                 for (int l = 1; l<=9; l++)
-                    if (l != IntListArr[0][0] && l != IntListArr[1][0])
-                        fields[l, IntListArr[0][1]].potential.Remove(j);                 
+                    if (l != IntListArr[0].x && l != IntListArr[1].x)
+                        fields[l, IntListArr[0].y].potential.Remove(j);                 
         }
 
     }
