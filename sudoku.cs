@@ -25,7 +25,7 @@ class Sudoku
         int totalFound = 0;
 
         new InputData.Sudoku().ReadOut(fields, ref totalFound);
-        new Strategies.Preparation().Run(fields, block);
+        
         outputData.Print(fields);
 
         while(totalFound <81 && twotimesnothing < 2)

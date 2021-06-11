@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class Field
 {
-    public int number;
+    public int number = 0;
     public List<int> potential = new List<int>();
     public int[] block;
 
