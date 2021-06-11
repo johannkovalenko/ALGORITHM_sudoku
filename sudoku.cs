@@ -7,19 +7,19 @@ class Sudoku
 {
     public static void Main()
     {
-        var outputData = new OutputData.Sudoku();
-
         var stopwatch   = new Stopwatch();
+        stopwatch.Start();
+
+        var outputData = new OutputData.Sudoku();
         var fields      = new Field[10, 10];
         var block       = new Block();
         var strategy    = new Strategy(fields, block);
         
-
-        stopwatch.Start();
+        var blockSquareMap = new BlockSquareMap();
 
         for (int i=1; i<=9; i++)
             for (int j=1; j<=9; j++)
-                fields[i, j] = new Field();
+                fields[i, j] = new Field(i, j, blockSquareMap);
 
         int twotimesnothing = 0;
         int totalFound = 0;
