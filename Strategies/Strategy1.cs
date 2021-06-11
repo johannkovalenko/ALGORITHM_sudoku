@@ -18,38 +18,38 @@ namespace Strategies
 
         public void Run()
         {
-            for (int row=1; row<=9; row++)
-                for (int col=1; col<=9; col++)
+            foreach (Field field in fields)
+                if (field != null)
                 {
-                    if (fields[row, col].number == 0)
+                    if (field.number == 0)
                         continue;
 
-                    UnknownActivity_RemovePotential(ref row, ref col, fields[row, col]);
-                    RemovePotentialForAllFieldsInBlock(oneFourSevenMap[row * 10 + col], fields[row, col]);
-                    RemovePotentialForAllFieldsInRowAndCol(ref row, ref col, fields[row, col]);
+                    UnknownActivity_RemovePotential(field);
+                    RemovePotentialForAllFieldsInBlock(oneFourSevenMap[field.x * 10 + field.y], field);
+                    RemovePotentialForAllFieldsInRowAndCol(field);
                 }
         }
 
-        private void UnknownActivity_RemovePotential(ref int row, ref int col, Field currentField)
+        private void UnknownActivity_RemovePotential(Field field)
         {
-            block.square.potential[fields[row,col].blocknumber.square].Remove(currentField.number);
-            block.horizontal.potential[fields[row,col].blocknumber.horizontal].Remove(currentField.number);
-            block.vertical.potential[fields[row,col].blocknumber.vertical].Remove(currentField.number);
+            block.square.potential[field.blocknumber.square].Remove(field.number);
+            block.horizontal.potential[field.blocknumber.horizontal].Remove(field.number);
+            block.vertical.potential[field.blocknumber.vertical].Remove(field.number);
         }
 
-        private void RemovePotentialForAllFieldsInBlock(Coordinates block, Field currentField)
+        private void RemovePotentialForAllFieldsInBlock(Coordinates block, Field field)
         {
             for (int i = block.x; i <= block.x+2; i++)
                 for (int j = block.y; j <= block.y+2; j++)
-                    fields[i,j].potential.Remove(currentField.number);
+                    fields[i,j].potential.Remove(field.number);
         }
 
-        private void RemovePotentialForAllFieldsInRowAndCol(ref int row, ref int col, Field currentField)
+        private void RemovePotentialForAllFieldsInRowAndCol(Field field)
         {
             for (int i=1; i<=9; i++)
             {            
-                fields[row,i].potential.Remove(currentField.number);
-                fields[i, col].potential.Remove(currentField.number); 
+                fields[field.x,i].potential.Remove(field.number);
+                fields[i, field.y].potential.Remove(field.number); 
             }
         }
     }

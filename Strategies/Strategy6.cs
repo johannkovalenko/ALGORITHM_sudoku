@@ -20,10 +20,9 @@ namespace Strategies
         {           
             var howoften = new Dictionary<int,int>();
 
-            for (int i=1;i<=9;i++)
-                for (int j=1;j<=9;j++)
+            foreach (Field field in fields)
+                if (field != null)
                 {
-                    Field field = fields[i,j];
                     howoften.Clear();
                     foreach (int blocknumber in new int[]{field.blocknumber.square, field.blocknumber.horizontal, field.blocknumber.vertical}) 
                         if (Task0(field, blocknumber, howoften))

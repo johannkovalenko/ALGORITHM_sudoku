@@ -2,6 +2,8 @@ using System.Collections.Generic;
 
 public class Field
 {
+    public readonly int x;
+    public readonly int y;
     public int number = 0;
     public List<int> potential = new List<int>();
 
@@ -10,16 +12,19 @@ public class Field
 
     public Blocknumber blocknumber;
 
-    public Field(int i, int j, BlockSquareMap blockSquareMap, Coordinates block)
+    public Field(int x, int y, BlockSquareMap blockSquareMap, Coordinates block)
     {
-        blocknumber = new Blocknumber(i, j, blockSquareMap[block.x*10 + block.y]);
+        this.x = x;
+        this.y = y;
+
+        blocknumber = new Blocknumber(x, y, blockSquareMap[block.x*10 + block.y]);
         
         for (int m = block.x; m <= block.x+2; m++)
-            if (i!=m)
+            if (x!=m)
                 this.furtherinfluencingblocksHorizontal.Add(m);
         
         for (int m = block.y; m <= block.y+2;m++)
-            if (j != m)
+            if (y != m)
                 this.furtherinfluencingblocksVertical.Add(m); 
     }
 

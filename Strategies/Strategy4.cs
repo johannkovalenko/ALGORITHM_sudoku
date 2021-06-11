@@ -13,12 +13,12 @@ namespace Strategies
 
         public bool Run()
         {
-            for (int i=1;i<=9;i++)
-                for (int j=1;j<=9;j++)
-                    if (fields[i,j].potential.Count == 1)
+            foreach(Field field in fields)
+                if (field != null)
+                    if (field.potential.Count == 1)
                     {
-                        fields[i,j].number = fields[i,j].potential[0];
-                        fields[i,j].potential.Clear();
+                        field.number = field.potential[0];
+                        field.potential.Clear();
                         return true;
                     }
 
