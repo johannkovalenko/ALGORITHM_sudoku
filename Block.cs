@@ -2,9 +2,6 @@ using System.Collections.Generic;
 
 public class Block
 {
-    public List<int>[] potential = new List<int>[19];
-    public List<Coordinates>[] fields = new List<Coordinates>[19];
-
     public Square square = new Square();
     public Vertical vertical = new Vertical();
     public Horizontal horizontal = new Horizontal();

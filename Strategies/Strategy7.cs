@@ -7,11 +7,14 @@ namespace Strategies
     {
         private Field[,] fields;
         private Block block;
+        private List<Coordinates>[][] threeBlockCollections;
 
         public Strategy7(Field[,] fields, Block block)
         {
             this.fields = fields;
             this.block = block;
+
+            threeBlockCollections = new List<Coordinates>[][] {block.square.fields, block.horizontal.fields, block.vertical.fields};
         }
 
         public bool Run()
@@ -19,37 +22,23 @@ namespace Strategies
             for (int i=1;i<=9;i++)
                 for (int o=1;o<=9;o++)
                     if (GetCount(ref i, ref o) == 1)
-                    {
-                        if (Task0(ref o, block.horizontal.fields[i]))
-                            return true;
+                        foreach (var three in threeBlockCollections)
+                            if (Task0(ref o, three[i]))
+                                return true;
 
-                        if (Task0(ref o, block.vertical.fields[i]))
-                            return true;
-
-                        if (Task0(ref o, block.square.fields[i]))
-                            return true; 
-                    }
             return false;
         }
 
         private int GetCount(ref int i, ref int o)
         {
             int cnt = 0;
-            foreach (Coordinates j in block.horizontal.fields[i])
-                foreach (int m in fields[j.x, j.y].potential)
-                    if (o == m)
-                        cnt++;
 
-            foreach (Coordinates j in block.vertical.fields[i])
-                foreach (int m in fields[j.x, j.y].potential)
-                    if (o == m)
-                        cnt++;
-
-            foreach (Coordinates j in block.square.fields[i])
-                foreach (int m in fields[j.x, j.y].potential)
-                    if (o == m)
-                        cnt++;            
-
+            foreach (var three in threeBlockCollections)
+                foreach (Coordinates j in three[i])
+                    foreach (int m in fields[j.x, j.y].potential)
+                        if (o == m)
+                            cnt++;
+       
             return cnt;
         }
 

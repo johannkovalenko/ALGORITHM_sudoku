@@ -4,7 +4,6 @@ public class Field
 {
     public int number = 0;
     public List<int> potential = new List<int>();
-    public int[] block;
 
     public List<int> furtherinfluencingblocksHorizontal = new List<int>();
     public List<int> furtherinfluencingblocksVertical = new List<int>();
