@@ -39,7 +39,14 @@ namespace Strategies
 
         private bool Task0(ref int i, ref int j, int blockno, Dictionary<int,int> howoften)
         {
-            foreach (Coordinates koors in block.fields[blockno])
+            foreach (Coordinates koors in block.horizontal.fields[blockno])
+                foreach (int number in fields[koors.x, koors.y].potential)
+                    if (howoften.ContainsKey(number))
+                        howoften[number]++;
+                    else
+                        howoften.Add(number, 1);
+                        
+            foreach (Coordinates koors in block.vertical.fields[blockno])
                 foreach (int number in fields[koors.x, koors.y].potential)
                     if (howoften.ContainsKey(number))
                         howoften[number]++;

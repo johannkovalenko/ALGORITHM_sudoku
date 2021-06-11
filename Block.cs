@@ -9,19 +9,38 @@ public class Block
     public Vertical vertical = new Vertical();
     public Horizontal horizontal = new Horizontal();
 
-    public Block()
+    public class Horizontal
     {
-        for (int i = 1; i<=9; i++)
-        {
-            this.fields[i]         = new List<Coordinates>();
-            this.fields[i+9]       = new List<Coordinates>();
-            this.potential[i]      = new List<int>(new int[]{1,2,3,4,5,6,7,8,9});
-            this.potential[i+9]    = new List<int>(new int[]{1,2,3,4,5,6,7,8,9});
+        public List<int>[] potential = new List<int>[10];
+        public List<Coordinates>[] fields = new List<Coordinates>[10];
 
-            for(int j=1; j<=9; j++)
-            {                       
-                this.fields[i].Add(new Coordinates(i,j));
-                this.fields[i+9].Add(new Coordinates(j,i));
+        public Horizontal()
+        {
+            for (int i = 1; i<=9; i++)
+            {
+                this.fields[i]         = new List<Coordinates>();
+                this.potential[i]      = new List<int>(new int[]{1,2,3,4,5,6,7,8,9});
+
+                for(int j=1; j<=9; j++)                     
+                    this.fields[i].Add(new Coordinates(i,j));
+            }
+        }
+    }
+
+    public class Vertical
+    {
+        public List<int>[] potential = new List<int>[10];
+        public List<Coordinates>[] fields = new List<Coordinates>[10];
+
+        public Vertical()
+        {
+            for (int i = 1; i<=9; i++)
+            {
+                this.fields[i]         = new List<Coordinates>();
+                this.potential[i]      = new List<int>(new int[]{1,2,3,4,5,6,7,8,9});
+
+                for(int j=1; j<=9; j++)                     
+                    this.fields[i].Add(new Coordinates(i,j));
             }
         }
     }
@@ -51,16 +70,4 @@ public class Block
                 }
         }
     }    
-
-    public class Horizontal
-    {
-        public List<int>[] potential = new List<int>[10];
-        public List<Coordinates>[] fields = new List<Coordinates>[10];
-    }  
-
-    public class Vertical
-    {
-        public List<int>[] potential = new List<int>[10];
-        public List<Coordinates>[] fields = new List<Coordinates>[10];
-    }  
 }

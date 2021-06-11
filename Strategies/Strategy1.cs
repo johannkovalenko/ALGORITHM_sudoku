@@ -37,13 +37,13 @@ namespace Strategies
             IntList.Remove(currentField.number);
             block.square.potential[fields[row,col].blocknumber.square] = IntList;
 
-            IntList = new List<int>(block.potential[fields[row,col].blocknumber.horizontal]);
+            IntList = new List<int>(block.horizontal.potential[fields[row,col].blocknumber.horizontal]);
             IntList.Remove(currentField.number);
-            block.potential[fields[row,col].blocknumber.horizontal] = IntList;
+            block.horizontal.potential[fields[row,col].blocknumber.horizontal] = IntList;
 
-            IntList = new List<int>(block.potential[fields[row,col].blocknumber.vertical]);
+            IntList = new List<int>(block.vertical.potential[fields[row,col].blocknumber.vertical]);
             IntList.Remove(currentField.number);
-            block.potential[fields[row,col].blocknumber.vertical] = IntList;
+            block.vertical.potential[fields[row,col].blocknumber.vertical] = IntList;
         }
 
         private void RemovePotentialForAllFieldsInBlock(Coordinates block, Field currentField)

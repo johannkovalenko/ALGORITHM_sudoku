@@ -52,8 +52,20 @@ namespace Strategies
 
         private void Task2(ref int i, ref int j, int a, List<Coordinates> BorderingBlock)
         {
-            foreach (int b in fields[i,j].furtherinfluencingblocks)
-                if (!block.potential[b].Contains(a))
+            foreach (int b in fields[i,j].furtherinfluencingblocksHorizontal)
+                if (!block.horizontal.potential[b].Contains(a))
+                    for (int c = 0; c < BorderingBlock.Count; c++)
+                        if (BorderingBlock[c] != null)
+                        {
+                            if (b <= 9 && BorderingBlock[c].x == b)
+                                BorderingBlock[c] = null;
+                            else if (BorderingBlock[c].y == b-9)
+                                BorderingBlock[c] = null;
+
+                        }
+
+            foreach (int b in fields[i,j].furtherinfluencingblocksVertical)
+                if (!block.vertical.potential[b].Contains(a))
                     for (int c = 0; c < BorderingBlock.Count; c++)
                         if (BorderingBlock[c] != null)
                         {

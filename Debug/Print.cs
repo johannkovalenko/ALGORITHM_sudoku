@@ -56,21 +56,7 @@ namespace Debug
             }
 
         }
-        public static void PrintFurtherInfluencingBlocks(object[,] furtherinfluencingblocks)
-        {
-            for (int i = 1; i <=9; i++)
-            {
-                for(int j=1;j<=9;j++)
-                {
-                    Console.Write("{0},{1}   ", i, j);
-                    List<int> inter = furtherinfluencingblocks[i,j] as List<int>;
-                    foreach (int a in inter)
-                        Console.Write(" {0}", a);
-                    Console.Write("\n");
-                }
-            }
 
-        }
         public static void PrintPotentialBlock(object[] potentialblock)
         {
             List<int> IntList;
