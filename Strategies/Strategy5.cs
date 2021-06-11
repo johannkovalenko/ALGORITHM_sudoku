@@ -7,11 +7,13 @@ namespace Strategies
     {
         private Field[,] fields;
         private Block block;
+        private OneFourSevenMap oneFourSevenMap;
 
-        public Strategy5(Field[,] fields, Block block)
+        public Strategy5(Field[,] fields, Block block, OneFourSevenMap oneFourSevenMap)
         {
             this.fields = fields;
             this.block = block;
+            this.oneFourSevenMap = oneFourSevenMap;
         }
 
         public bool Run()
@@ -21,14 +23,11 @@ namespace Strategies
             for (int i=1;i<=9;i++)
                 for (int j=1;j<=9;j++)
                 {
-                    int k = i - (i-1) % 3;
-                    int l = j - (j-1) % 3;
-
                     foreach (int a in fields[i,j].potential)
                     {
                         BorderingBlock.Clear();
     
-                        Task1(ref i, ref j, k, l, BorderingBlock);
+                        Task1(ref i, ref j, oneFourSevenMap[i*10+j], BorderingBlock);
                         Task2(ref i, ref j, a, BorderingBlock);
 
                         if (!Task3(BorderingBlock))
@@ -43,10 +42,10 @@ namespace Strategies
             return false;
         }
 
-        private void Task1(ref int i, ref int j, int k, int l, List<Coordinates> BorderingBlock)
+        private void Task1(ref int i, ref int j, Coordinates block, List<Coordinates> BorderingBlock)
         {
-            for (int m=k;m<=k+2;m++) 
-                for (int n=l;n<=l+2;n++)
+            for (int m=block.x; m<=block.x+2; m++) 
+                for (int n=block.y; n<=block.y+2; n++)
                     if (!(m == i && n == j))
                         BorderingBlock.Add(new Coordinates(m,n));
         }

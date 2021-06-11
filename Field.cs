@@ -10,18 +10,15 @@ public class Field
 
     public Blocknumber blocknumber;
 
-    public Field(int i, int j, BlockSquareMap blockSquareMap)
+    public Field(int i, int j, BlockSquareMap blockSquareMap, Coordinates block)
     {
-        int k = i - (i-1) % 3;
-        int l = j - (j-1) % 3;
-
-        blocknumber = new Blocknumber(i, j + 9, blockSquareMap[k*10 + l]);
+        blocknumber = new Blocknumber(i, j + 9, blockSquareMap[block.x*10 + block.y]);
         
-        for (int m = k; m <= k+2;m++)
+        for (int m = block.x; m <= block.x+2; m++)
             if (i!=m)
                 this.furtherinfluencingblocks.Add(m);
         
-        for (int m = l; m <= l+2;m++)
+        for (int m = block.y; m <= block.y+2;m++)
             if (j != m)
                 this.furtherinfluencingblocks.Add(m + 9); 
     }

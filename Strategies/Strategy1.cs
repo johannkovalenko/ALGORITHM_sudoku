@@ -7,11 +7,13 @@ namespace Strategies
     {   
         private Field[,] fields;
         private Block block;
+        private OneFourSevenMap oneFourSevenMap;
 
-        public Strategy1(Field[,] fields, Block block)
+        public Strategy1(Field[,] fields, Block block, OneFourSevenMap oneFourSevenMap)
         {
             this.fields = fields;
             this.block = block;
+            this.oneFourSevenMap = oneFourSevenMap;
         }
 
         public void Run()
@@ -23,7 +25,7 @@ namespace Strategies
                         continue;
 
                     UnknownActivity_RemovePotential(ref row, ref col, fields[row, col]);
-                    RemovePotentialForAllFieldsInBlock(ref row, ref col, fields[row, col]);
+                    RemovePotentialForAllFieldsInBlock(oneFourSevenMap[row * 10 + col], fields[row, col]);
                     RemovePotentialForAllFieldsInRow(ref row, fields[row, col]);
                     RemovePotentialForAllFieldsInCol(ref col, fields[row, col]);
                 }
@@ -44,13 +46,10 @@ namespace Strategies
             block.potential[fields[row,col].blocknumber.vertical] = IntList;
         }
 
-        private void RemovePotentialForAllFieldsInBlock(ref int row, ref int col, Field currentField)
+        private void RemovePotentialForAllFieldsInBlock(Coordinates block, Field currentField)
         {
-            int rowBlock = row - (row - 1) % 3;
-            int colBlock = col - (col - 1) % 3;
-
-            for (int i = rowBlock; i <= rowBlock+2; i++)
-                for (int j = colBlock; j <= colBlock+2; j++)
+            for (int i = block.x; i <= block.x+2; i++)
+                for (int j = block.y; j <= block.y+2; j++)
                 {
                     var IntList = new List<int>(fields[i,j].potential);
                     IntList.Remove(currentField.number);

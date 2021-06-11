@@ -10,22 +10,18 @@ class Sudoku
         var stopwatch   = new Stopwatch();
         stopwatch.Start();
 
-        var outputData = new OutputData.Sudoku();
-        var fields      = new Field[10, 10];
-        var block       = new Block();
-        var strategy    = new Strategy(fields, block);
-        
-        var blockSquareMap = new BlockSquareMap();
-
-        for (int i=1; i<=9; i++)
-            for (int j=1; j<=9; j++)
-                fields[i, j] = new Field(i, j, blockSquareMap);
-
-        int twotimesnothing = 0;
         int totalFound = 0;
 
-        new InputData.Sudoku().ReadOut(fields, ref totalFound);
+        var outputData = new OutputData.Sudoku();
+        var blockSquareMap = new BlockSquareMap();
+        var oneFourSevenMap = new OneFourSevenMap();
+
+        Field[,] fields = new InputData.Sudoku().Preparation(blockSquareMap, oneFourSevenMap, ref totalFound);  
+        var block       = new Block();
+        var strategy    = new Strategy(fields, block, oneFourSevenMap);
         
+        int twotimesnothing = 0;
+
         outputData.Print(fields);
 
         while(totalFound <81 && twotimesnothing < 2)
