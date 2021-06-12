@@ -13,12 +13,10 @@ class Sudoku
         int totalFound = 0;
 
         var outputData = new OutputData.Sudoku();
-        var blockSquareMap = new BlockSquareMap();
-        var oneFourSevenMap = new OneFourSevenMap();
 
-        Field[,] fields = new InputData.Sudoku().Preparation(blockSquareMap, oneFourSevenMap, ref totalFound);  
+        Field[,] fields = new InputData.Sudoku().Preparation(ref totalFound);  
         var block       = new Block();
-        var strategy    = new Strategy(fields, block, oneFourSevenMap);
+        var strategy    = new Strategy(fields, block);
         
         int twotimesnothing = 0;
 
