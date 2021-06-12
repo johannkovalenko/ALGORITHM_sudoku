@@ -7,25 +7,20 @@ namespace Strategies
     {   
         private Field[,] fields;
         private Block block;
-        private OneFourSevenMap oneFourSevenMap;
 
-        public Strategy1(Field[,] fields, Block block, OneFourSevenMap oneFourSevenMap)
+        public Strategy1(Field[,] fields, Block block)
         {
             this.fields = fields;
             this.block = block;
-            this.oneFourSevenMap = oneFourSevenMap;
         }
 
         public void Run()
         {
             foreach (Field field in fields)
-                if (field != null)
+                if (field != null && field.number != 0)
                 {
-                    if (field.number == 0)
-                        continue;
-
                     UnknownActivity_RemovePotential(field);
-                    RemovePotentialForAllFieldsInBlock(oneFourSevenMap[field.x * 10 + field.y], field);
+                    RemovePotentialForAllFieldsInBlock(field);
                     RemovePotentialForAllFieldsInRowAndCol(field);
                 }
         }
@@ -37,10 +32,10 @@ namespace Strategies
             block.vertical.potential[field.blocknumber.vertical].Remove(field.number);
         }
 
-        private void RemovePotentialForAllFieldsInBlock(Coordinates block, Field field)
+        private void RemovePotentialForAllFieldsInBlock(Field field)
         {
-            for (int i = block.x; i <= block.x+2; i++)
-                for (int j = block.y; j <= block.y+2; j++)
+            for (int i = field.blockCoordinates.x; i <= field.blockCoordinates.x+2; i++)
+                for (int j = field.blockCoordinates.y; j <= field.blockCoordinates.y+2; j++)
                     fields[i,j].potential.Remove(field.number);
         }
 
