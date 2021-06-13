@@ -24,8 +24,8 @@ namespace Strategies
                 if (field != null)
                 {
                     howoften.Clear();
-                    foreach (int blocknumber in new int[]{field.blocknumber.square, field.blocknumber.horizontal, field.blocknumber.vertical}) 
-                        if (Task0(field, blocknumber, howoften))
+                    foreach (int fieldBlock in new int[]{field.square.number, field.horizontal.number, field.vertical.number}) 
+                        if (Task0(field, fieldBlock, howoften))
                             return true;
                 }
 

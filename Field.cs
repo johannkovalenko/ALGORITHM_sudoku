@@ -12,7 +12,9 @@ public class Field
     public readonly List<int> furtherinfluencingblocksHorizontal = new List<int>();
     public readonly List<int> furtherinfluencingblocksVertical = new List<int>();
 
-    public Blocknumber blocknumber;
+    public readonly Horizontal horizontal;
+    public readonly Vertical vertical;
+    public readonly Square square;
 
     public Field(int x, int y, int number)
     {       
@@ -26,7 +28,10 @@ public class Field
         int blockY = y - (y-1) % 3;
 
         this.blockCoordinates = new Coordinates(blockX, blockY);
-        this.blocknumber = new Blocknumber(x, y, blockX + blockY/3);
+        this.horizontal = new Horizontal(x, y);
+        this.vertical = new Vertical(x, y);
+        this.square = new Square(blockX, blockY);
+
         
         for (int m = this.blockCoordinates.x; m <= this.blockCoordinates.x+2; m++)
             furtherinfluencingblocksHorizontal.Add(m);
@@ -36,17 +41,48 @@ public class Field
 
     }
 
-    public class Blocknumber
+    public class Horizontal
     {
-        public Blocknumber(int horizontal, int vertical, int square)
+        public Horizontal(int x, int y)
         {
-            this.horizontal = horizontal;
-            this.vertical = vertical;
-            this.square = square;
+            this.number = x;
+
+            for (int i=1;i<=9;i++)
+                this.fields[i] = new Coordinates(x, i);
         }
 
-        public readonly int square;
-        public readonly int horizontal;
-        public readonly int vertical;
+        public readonly int number;
+        public readonly Coordinates[] fields = new Coordinates[10];
+    }
+
+    public class Vertical
+    {
+        public Vertical(int x, int y)
+        {
+            this.number = y;
+
+            for (int i=1;i<=9;i++)
+                this.fields[i] = new Coordinates(i, y);
+        }
+
+        public readonly int number;
+        public readonly Coordinates[] fields = new Coordinates[10];
+    }
+
+    public class Square
+    {
+        public Square(int x, int y)
+        {
+            this.number = x + y/3;
+
+            int cnt = 1;
+
+            for (int i=x; i<=x+2; i++)
+                for (int j=y; j<=y+2; j++)
+                    this.fields[cnt++] = new Coordinates(i, j);
+        }
+
+        public readonly int number;
+        public readonly Coordinates[] fields = new Coordinates[10];
     }
 }

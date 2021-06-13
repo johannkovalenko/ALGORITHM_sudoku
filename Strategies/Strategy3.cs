@@ -59,7 +59,7 @@ namespace Strategies
 
         private void Horizontal1(ref int i, ref int j, List<Coordinates> IntListArr)
         {
-            foreach (Coordinates coordinates in block.square.fields[fields[i,j].blocknumber.square])
+            foreach (Coordinates coordinates in block.square.fields[fields[i,j].square.number])
                 if (coordinates.x != i)
                 {
                     fields[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
@@ -86,7 +86,7 @@ namespace Strategies
 
         private void Vertical1(ref int i, ref int j, List<Coordinates> IntListArr)
         {           
-            foreach (Coordinates n in block.square.fields[fields[j,i].blocknumber.square])
+            foreach (Coordinates n in block.square.fields[fields[j,i].square.number])
                 if (n.y != i)
                 {
                     fields[n.x, n.y].potential.Remove(IntListArr[0].x);
