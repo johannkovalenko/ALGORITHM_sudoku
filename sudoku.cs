@@ -15,7 +15,7 @@ class Sudoku
         var outputData = new OutputData.Sudoku();
 
         var block       = new Block();
-
+        
         Field[,] board = new InputData.Sudoku().Preparation(ref totalFound);  
         
         var strategy    = new Strategy(board, block);

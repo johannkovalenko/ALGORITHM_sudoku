@@ -60,11 +60,12 @@ namespace Strategies
         private void Horizontal1(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             foreach (Coordinates coordinates in block.square.fields[board[i,j].square.number])
-                if (coordinates.x != i)
-                {
-                    board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
-                    board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
-                }
+                if (coordinates != null)
+                    if (coordinates.x != i)
+                    {
+                        board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
+                        board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
+                    }
         }
 
         private void Horizontal2(ref int i, ref int j, List<Coordinates> IntListArr)
@@ -87,11 +88,12 @@ namespace Strategies
         private void Vertical1(ref int i, ref int j, List<Coordinates> IntListArr)
         {           
             foreach (Coordinates n in block.square.fields[board[j,i].square.number])
-                if (n.y != i)
-                {
-                    board[n.x, n.y].potential.Remove(IntListArr[0].x);
-                    board[n.x, n.y].potential.Remove(IntListArr[0].y); 
-                }
+                if (n != null)
+                    if (n.y != i)
+                    {
+                        board[n.x, n.y].potential.Remove(IntListArr[0].x);
+                        board[n.x, n.y].potential.Remove(IntListArr[0].y); 
+                    }
         }
 
         private void Vertical2(ref int i, ref int j, List<Coordinates> IntListArr)

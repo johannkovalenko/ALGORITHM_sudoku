@@ -7,14 +7,14 @@ namespace Strategies
     {
         private Field[,] board;
         private Block block;
-        private List<Coordinates>[][] threeBlockCollections;
+        private Coordinates[][][] threeBlockCollections;
 
         public Strategy7(Field[,] board, Block block)
         {
             this.board = board;
             this.block = block;
 
-            threeBlockCollections = new List<Coordinates>[][] {block.square.fields, block.horizontal.fields, block.vertical.fields};
+            threeBlockCollections = new Coordinates[][][] {block.square.fields, block.horizontal.fields, block.vertical.fields};
         }
 
         public bool Run()
@@ -35,14 +35,15 @@ namespace Strategies
 
             foreach (var three in threeBlockCollections)
                 foreach (Coordinates j in three[i])
-                    foreach (int m in board[j.x, j.y].potential)
-                        if (o == m)
-                            cnt++;
+                    if (j != null)
+                        foreach (int m in board[j.x, j.y].potential)
+                            if (o == m)
+                                cnt++;
        
             return cnt;
         }
 
-        private bool Task0(ref int o, List<Coordinates> coordinates)
+        private bool Task0(ref int o, Coordinates[] coordinates)
         {
             foreach (Coordinates j in coordinates)
                 if (board[j.x, j.y].potential.Contains(o))

@@ -7,13 +7,13 @@ namespace Strategies
     {
         private Field[,] board;
         private Block block;
-        private List<Coordinates>[][] threeBlockCollections;
+        private Coordinates[][][] threeBlockCollections;
 
         public Strategy6(Field[,] board, Block block)
         {
             this.board = board;
             this.block = block;
-            this.threeBlockCollections = new List<Coordinates>[][] {block.square.fields, block.horizontal.fields, block.vertical.fields};
+            this.threeBlockCollections = new Coordinates[][][] {block.square.fields, block.horizontal.fields, block.vertical.fields};
         }
 
         public bool Run()
@@ -36,11 +36,12 @@ namespace Strategies
         {
             foreach (var three in threeBlockCollections)
                 foreach (Coordinates koors in three[blockno])
-                    foreach (int number in board[koors.x, koors.y].potential)
-                        if (howoften.ContainsKey(number))
-                            howoften[number]++;
-                        else
-                            howoften.Add(number, 1);
+                    if (koors != null)
+                        foreach (int number in board[koors.x, koors.y].potential)
+                            if (howoften.ContainsKey(number))
+                                howoften[number]++;
+                            else
+                                howoften.Add(number, 1);
                         
             foreach (int ky in howoften.Keys)
                 if (howoften[ky] == 1 && field.potential.Contains(ky))

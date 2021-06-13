@@ -33,8 +33,9 @@ namespace Strategies
             var interimCoordinates = new List<Coordinates>();
 
             foreach (Coordinates coor in block.square.fields[field.x])
-                if (board[coor.x, coor.y].potential.Contains(field.y))
-                    interimCoordinates.Add(new Coordinates(coor.x, coor.y));
+                if (coor != null)
+                    if (board[coor.x, coor.y].potential.Contains(field.y))
+                        interimCoordinates.Add(new Coordinates(coor.x, coor.y));
 
             return interimCoordinates;
         }
