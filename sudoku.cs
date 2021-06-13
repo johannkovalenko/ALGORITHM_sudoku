@@ -14,17 +14,19 @@ class Sudoku
 
         var outputData = new OutputData.Sudoku();
 
-        Field[,] fields = new InputData.Sudoku().Preparation(ref totalFound);  
         var block       = new Block();
-        var strategy    = new Strategy(fields, block);
+
+        Field[,] board = new InputData.Sudoku().Preparation(ref totalFound);  
+        
+        var strategy    = new Strategy(board, block);
         
         int twotimesnothing = 0;
 
-        outputData.Print(fields);
+        outputData.Print(board);
 
         while(totalFound <81 && twotimesnothing < 2)
         {
-            bool found = Sudoku.ReducePot(strategy, fields);
+            bool found = Sudoku.ReducePot(strategy, board);
 
             if (found)
             {
@@ -38,14 +40,14 @@ class Sudoku
             }                      
         }
 
-        outputData.Print(fields);
+        outputData.Print(board);
 
         stopwatch.Stop();
 
         Console.WriteLine(stopwatch.Elapsed.Milliseconds);
     }
 
-    public static bool ReducePot(Strategy strategy, Field[,] fields)
+    public static bool ReducePot(Strategy strategy, Field[,] board)
     {
         bool found;
 

@@ -5,13 +5,13 @@ namespace Strategies
 {
     public class Strategy6
     {
-        private Field[,] fields;
+        private Field[,] board;
         private Block block;
         private List<Coordinates>[][] threeBlockCollections;
 
-        public Strategy6(Field[,] fields, Block block)
+        public Strategy6(Field[,] board, Block block)
         {
-            this.fields = fields;
+            this.board = board;
             this.block = block;
             this.threeBlockCollections = new List<Coordinates>[][] {block.square.fields, block.horizontal.fields, block.vertical.fields};
         }
@@ -20,7 +20,7 @@ namespace Strategies
         {           
             var howoften = new Dictionary<int,int>();
 
-            foreach (Field field in fields)
+            foreach (Field field in board)
                 if (field != null)
                 {
                     howoften.Clear();
@@ -36,7 +36,7 @@ namespace Strategies
         {
             foreach (var three in threeBlockCollections)
                 foreach (Coordinates koors in three[blockno])
-                    foreach (int number in fields[koors.x, koors.y].potential)
+                    foreach (int number in board[koors.x, koors.y].potential)
                         if (howoften.ContainsKey(number))
                             howoften[number]++;
                         else

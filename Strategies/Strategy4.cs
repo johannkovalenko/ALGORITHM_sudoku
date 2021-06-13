@@ -4,16 +4,16 @@ namespace Strategies
 {
     public class Strategy4
     {
-        private Field[,] fields;
+        private Field[,] board;
 
-        public Strategy4(Field[,] fields)
+        public Strategy4(Field[,] board)
         {
-            this.fields = fields;
+            this.board = board;
         }
 
         public bool Run()
         {
-            foreach(Field field in fields)
+            foreach(Field field in board)
                 if (field != null)
                     if (field.potential.Count == 1)
                     {

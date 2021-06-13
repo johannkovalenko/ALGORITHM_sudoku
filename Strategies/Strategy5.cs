@@ -5,12 +5,12 @@ namespace Strategies
 {
     public class Strategy5
     {
-        private Field[,] fields;
+        private Field[,] board;
         private Block block;
 
-        public Strategy5(Field[,] fields, Block block)
+        public Strategy5(Field[,] board, Block block)
         {
-            this.fields = fields;
+            this.board = board;
             this.block = block;
         }
 
@@ -18,7 +18,7 @@ namespace Strategies
         {
             var BorderingBlock = new List<Coordinates>();
             
-                foreach (Field field in fields)
+                foreach (Field field in board)
                     if (field != null)
                         foreach (int potentialNumber in field.potential)
                         {
@@ -76,7 +76,7 @@ namespace Strategies
         private bool Task3(List<Coordinates> BorderingBlock)
         {
             foreach (Coordinates c in BorderingBlock)
-                if (c != null && fields[c.x, c.y].number == 0)
+                if (c != null && board[c.x, c.y].number == 0)
                     return true;
                     
             return false;

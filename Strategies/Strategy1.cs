@@ -5,49 +5,38 @@ namespace Strategies
 {
     public class Strategy1
     {   
-        private Field[,] fields;
+        private Field[,] board;
         private Block block;
 
-        public Strategy1(Field[,] fields, Block block)
+        public Strategy1(Field[,] board, Block block)
         {
-            this.fields = fields;
+            this.board = board;
             this.block = block;
         }
 
         public void Run()
         {
-            foreach (Field field in fields)
+            foreach (Field field in board)
                 if (field != null && field.number != 0)
                 {
-                    UnknownActivity_RemovePotential(field);
-                    RemovePotentialForAllFieldsInBlock(field);
-                    RemovePotentialForAllFieldsInRowAndCol(field);
+                    RemoveNumberOfCurrentField_FromThePotentialList_OfAllThreeBlocks_TheNumberIsIn(field);
+                    RemoveNumberOfCurrentField_FromThePotentialList_InAllFields_ThatAreInTheSameThreeBlocks_TheNumberIsIn(field);
                 }
         }
 
-        private void UnknownActivity_RemovePotential(Field field)
+        private void RemoveNumberOfCurrentField_FromThePotentialList_OfAllThreeBlocks_TheNumberIsIn(Field field)
         {
             block.square.potential[field.square.number].Remove(field.number);
             block.horizontal.potential[field.horizontal.number].Remove(field.number);
             block.vertical.potential[field.vertical.number].Remove(field.number);
         }
 
-        private void RemovePotentialForAllFieldsInBlock(Field field)
+        private void RemoveNumberOfCurrentField_FromThePotentialList_InAllFields_ThatAreInTheSameThreeBlocks_TheNumberIsIn(Field field)
         {
-            foreach (Coordinates coor in field.square.fields)
-                if (coor != null)
-                    fields[coor.x, coor.y].potential.Remove(field.number);
-        }
-
-        private void RemovePotentialForAllFieldsInRowAndCol(Field field)
-        {
-            foreach (Coordinates coor in field.horizontal.fields)
-                if (coor != null)
-                    fields[coor.x, coor.y].potential.Remove(field.number);
-
-            foreach (Coordinates coor in field.vertical.fields)
-                if (coor != null)
-                    fields[coor.x, coor.y].potential.Remove(field.number);
+            foreach (var threeBlock in field.threeBlocks)
+                foreach (Coordinates coor in threeBlock)
+                    if (coor != null)
+                        board[coor.x, coor.y].potential.Remove(field.number);
         }
     }
 }

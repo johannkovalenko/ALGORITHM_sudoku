@@ -74,15 +74,15 @@ namespace Debug
 
         }    
 
-        public static void PrintPotentialFull(Field[,] fields)
+        public static void PrintPotentialFull(Field[,] board)
         {
             var sb = new System.Text.StringBuilder();
 
             for (int x=1; x<=1; x++)
                 for (int y=1; y<=1; y++)
                 {
-                    sb.Append(x + " " + y + "    " + fields[x, y].number + "    ");
-                    foreach (int test in fields[x,y].potential)
+                    sb.Append(x + " " + y + "    " + board[x, y].number + "    ");
+                    foreach (int test in board[x,y].potential)
                         sb.Append(test + " ");
                     sb.Append("\r\n");        
                 }

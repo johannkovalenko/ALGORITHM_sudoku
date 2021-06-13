@@ -12,6 +12,8 @@ public class Field
     public readonly List<int> furtherinfluencingblocksHorizontal = new List<int>();
     public readonly List<int> furtherinfluencingblocksVertical = new List<int>();
 
+    public readonly Coordinates[][] threeBlocks;
+
     public readonly Horizontal horizontal;
     public readonly Vertical vertical;
     public readonly Square square;
@@ -31,6 +33,8 @@ public class Field
         this.horizontal = new Horizontal(x, y);
         this.vertical = new Vertical(x, y);
         this.square = new Square(blockX, blockY);
+
+        threeBlocks = new Coordinates[][] {horizontal.fields, vertical.fields, square.fields};
 
         
         for (int m = this.blockCoordinates.x; m <= this.blockCoordinates.x+2; m++)

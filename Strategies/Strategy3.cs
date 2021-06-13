@@ -4,12 +4,12 @@ namespace Strategies
 {
     public class Strategy3
     {
-        private Field[,] fields;
+        private Field[,] board;
         private Block block;
 
-        public Strategy3(Field[,] fields, Block block)
+        public Strategy3(Field[,] board, Block block)
         {
-            this.fields = fields;
+            this.board = board;
             this.block = block;
         }
 
@@ -53,17 +53,17 @@ namespace Strategies
         private void Horizontal0(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             for (int y=j; y<=j+2; y++)               
-                if (fields[i,y].potential.Count == 2)
-                    IntListArr.Add(new Coordinates(fields[i,y].potential[0], fields[i,y].potential[1]));
+                if (board[i,y].potential.Count == 2)
+                    IntListArr.Add(new Coordinates(board[i,y].potential[0], board[i,y].potential[1]));
         }
 
         private void Horizontal1(ref int i, ref int j, List<Coordinates> IntListArr)
         {
-            foreach (Coordinates coordinates in block.square.fields[fields[i,j].square.number])
+            foreach (Coordinates coordinates in block.square.fields[board[i,j].square.number])
                 if (coordinates.x != i)
                 {
-                    fields[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
-                    fields[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
+                    board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
+                    board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
                 }
         }
 
@@ -72,25 +72,25 @@ namespace Strategies
             for (int y=1; y<=9; y++)
                 if (y!=j && y!=j+1 && y!= j+2)
                 {
-                    fields[i,y].potential.Remove(IntListArr[0].x);
-                    fields[i,y].potential.Remove(IntListArr[0].y);   
+                    board[i,y].potential.Remove(IntListArr[0].x);
+                    board[i,y].potential.Remove(IntListArr[0].y);   
                 }
         }
 
         private void Vertical0(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             for (int m=j;m<=j+2;m++)
-                if(fields[m,i].potential.Count == 2)
-                    IntListArr.Add(new Coordinates(fields[m,i].potential[0], fields[m,i].potential[1]));
+                if(board[m,i].potential.Count == 2)
+                    IntListArr.Add(new Coordinates(board[m,i].potential[0], board[m,i].potential[1]));
         }
 
         private void Vertical1(ref int i, ref int j, List<Coordinates> IntListArr)
         {           
-            foreach (Coordinates n in block.square.fields[fields[j,i].square.number])
+            foreach (Coordinates n in block.square.fields[board[j,i].square.number])
                 if (n.y != i)
                 {
-                    fields[n.x, n.y].potential.Remove(IntListArr[0].x);
-                    fields[n.x, n.y].potential.Remove(IntListArr[0].y); 
+                    board[n.x, n.y].potential.Remove(IntListArr[0].x);
+                    board[n.x, n.y].potential.Remove(IntListArr[0].y); 
                 }
         }
 
@@ -99,8 +99,8 @@ namespace Strategies
             for (int l = 1; l <=9; l++)
                 if (l != j && l != j+1 && l!= j+2)
                 {
-                    fields[l,i].potential.Remove(IntListArr[0].x);
-                    fields[l,i].potential.Remove(IntListArr[0].y);
+                    board[l,i].potential.Remove(IntListArr[0].x);
+                    board[l,i].potential.Remove(IntListArr[0].y);
                 }
         }
     }

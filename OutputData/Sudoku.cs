@@ -6,16 +6,16 @@ namespace OutputData
 {
     public class Sudoku
     {
-        public void Print(Field[,] fields)
+        public void Print(Field[,] board)
         {
             for (int i = 1; i <=9; i++)
             {
                 for(int j=1;j<=9;j++)
                 {
-                    if (fields[i,j].number == 0)
+                    if (board[i,j].number == 0)
                         Console.Write("  ");
                     else
-                        Console.Write("{0} ", fields[i,j].number);
+                        Console.Write("{0} ", board[i,j].number);
                 }
 
                 Console.Write("\n");
@@ -24,7 +24,7 @@ namespace OutputData
             Console.WriteLine();
         }
 
-        public void SaveInTxt(Field[,] fields, string fileName)
+        public void SaveInTxt(Field[,] board, string fileName)
         {
             var sb = new StringBuilder();
 
@@ -32,10 +32,10 @@ namespace OutputData
             {
                 for(int j=1;j<=9;j++)
                 {
-                    if (fields[i,j].number == 0)
+                    if (board[i,j].number == 0)
                         sb.Append("  ");
                     else
-                        sb.Append(fields[i,j].number + " ");
+                        sb.Append(board[i,j].number + " ");
                 }
                 sb.Append("\r\n");
             }

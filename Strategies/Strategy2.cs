@@ -4,18 +4,18 @@ namespace Strategies
 {
     public class Strategy2
     {
-        private Field[,] fields;
+        private Field[,] board;
         private Block block;
 
-        public Strategy2(Field[,] fields, Block block)
+        public Strategy2(Field[,] board, Block block)
         {
-            this.fields = fields;
+            this.board = board;
             this.block = block;
         }
 
         public void Run()
         {
-            foreach (Field field in fields)
+            foreach (Field field in board)
                 if (field != null)
                 {
                     var interimCoordinates = SubTask0(field);
@@ -33,7 +33,7 @@ namespace Strategies
             var interimCoordinates = new List<Coordinates>();
 
             foreach (Coordinates coor in block.square.fields[field.x])
-                if (fields[coor.x, coor.y].potential.Contains(field.y))
+                if (board[coor.x, coor.y].potential.Contains(field.y))
                     interimCoordinates.Add(new Coordinates(coor.x, coor.y));
 
             return interimCoordinates;
@@ -44,7 +44,7 @@ namespace Strategies
             if (interimCoordinates[0].x == interimCoordinates[1].x)
                 for (int l = 1; l<=9; l++)
                     if (l != interimCoordinates[0].y && l != interimCoordinates[1].y)
-                        fields[interimCoordinates[0].x ,l].potential.Remove(field.y); 
+                        board[interimCoordinates[0].x ,l].potential.Remove(field.y); 
         }
 
         private void SubTask2(List<Coordinates> interimCoordinates, Field field)
@@ -52,7 +52,7 @@ namespace Strategies
             if (interimCoordinates[0].y == interimCoordinates[1].y)
                 for (int l = 1; l<=9; l++)
                     if (l != interimCoordinates[0].x && l != interimCoordinates[1].x)
-                        fields[l, interimCoordinates[0].y].potential.Remove(field.y);                 
+                        board[l, interimCoordinates[0].y].potential.Remove(field.y);                 
         }
 
     }
