@@ -8,9 +8,9 @@ namespace Debug
         public static void PrintPotential(object[,] potential)
         {
             List<int> IntList;
-            for (int i = 1; i <=9; i++)
+            for (int i =0; i<9; i++)
             {
-                for(int j=1;j<=9;j++)
+                for(int j=0;j<9;j++)
                 {
                     IntList = potential[i,j] as List<int>;
                     Console.Write("{0},{1}   ", i, j);
@@ -43,9 +43,9 @@ namespace Debug
 
         public static void PrintBlockForField(object[,] blockforfield)
         {
-            for (int i = 1; i <=9; i++)
+            for (int i =0; i<9; i++)
             {
-                for(int j=1;j<=9;j++)
+                for(int j=0;j<9;j++)
                 {
                     Console.Write("{0},{1}   ", i, j);
                     int[] inter = blockforfield[i,j] as int[];
@@ -62,7 +62,7 @@ namespace Debug
             List<int> IntList;
             int[] whichblocks = new int[] {1,2,3,16,17,18,21};
             foreach(int i in whichblocks)
-            //for (int i = 1; i <=27; i++)
+            //for (int i =0; i<=27; i++)
             {
                 IntList = potentialblock[i] as List<int>;
                 Console.Write("Block {0}   ", i);
@@ -78,8 +78,8 @@ namespace Debug
         {
             var sb = new System.Text.StringBuilder();
 
-            for (int x=1; x<=1; x++)
-                for (int y=1; y<=1; y++)
+            for (int x=0; x<=0; x++)
+                for (int y=0; y<=0; y++)
                 {
                     sb.Append(x + " " + y + "    " + board[x, y].number + "    ");
                     foreach (int test in board[x,y].potential)

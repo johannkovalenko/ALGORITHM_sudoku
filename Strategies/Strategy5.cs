@@ -19,21 +19,20 @@ namespace Strategies
             var BorderingBlock = new List<Coordinates>();
             
                 foreach (Field field in board)
-                    if (field != null)
-                        foreach (int potentialNumber in field.potential)
-                        {
-                            BorderingBlock.Clear();
-        
-                            Task1(field, BorderingBlock);
-                            Task2(field, potentialNumber, BorderingBlock);
+                    foreach (int potentialNumber in field.potential)
+                    {
+                        BorderingBlock.Clear();
 
-                            if (!Task3(BorderingBlock))
-                            {
-                                field.number = potentialNumber;
-                                field.potential.Clear();
-                                return true;
-                            }
+                        Task1(field, BorderingBlock);
+                        Task2(field, potentialNumber, BorderingBlock);
+
+                        if (!Task3(BorderingBlock))
+                        {
+                            field.number = potentialNumber;
+                            field.potential.Clear();
+                            return true;
                         }
+                    }
 
             return false;
         }
@@ -50,10 +49,10 @@ namespace Strategies
         {
             foreach (int b in field.furtherinfluencingblocksHorizontal)
                 if (!block.horizontal.potential[b].Contains(potentialNumber))
-                    for (int c = 0; c < BorderingBlock.Count; c++)
+                    for (int c = 0; c< BorderingBlock.Count; c++)
                         if (BorderingBlock[c] != null)
                         {
-                            if (b <= 9 && BorderingBlock[c].x == b)
+                            if (b<9 && BorderingBlock[c].x == b)
                                 BorderingBlock[c] = null;
                             else if (BorderingBlock[c].y == b-9)
                                 BorderingBlock[c] = null;
@@ -62,10 +61,10 @@ namespace Strategies
 
             foreach (int b in field.furtherinfluencingblocksVertical)
                 if (!block.vertical.potential[b].Contains(potentialNumber))
-                    for (int c = 0; c < BorderingBlock.Count; c++)
+                    for (int c = 0; c< BorderingBlock.Count; c++)
                         if (BorderingBlock[c] != null)
                         {
-                            if (b <= 9 && BorderingBlock[c].x == b)
+                            if (b<9 && BorderingBlock[c].x == b)
                                 BorderingBlock[c] = null;
                             else if (BorderingBlock[c].y == b-9)
                                 BorderingBlock[c] = null;

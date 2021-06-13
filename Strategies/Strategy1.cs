@@ -17,7 +17,7 @@ namespace Strategies
         public void Run()
         {
             foreach (Field field in board)
-                if (field != null && field.number != 0)
+                if (field.number != 0)
                 {
                     RemoveNumberOfCurrentField_FromThePotentialList_OfAllThreeBlocks_TheNumberIsIn(field);
                     RemoveNumberOfCurrentField_FromThePotentialList_InAllFields_ThatAreInTheSameThreeBlocks_TheNumberIsIn(field);
@@ -34,16 +34,13 @@ namespace Strategies
         private void RemoveNumberOfCurrentField_FromThePotentialList_InAllFields_ThatAreInTheSameThreeBlocks_TheNumberIsIn(Field field)
         {
             foreach (Coordinates coor in block.square.fields[field.square.number])
-                if (coor != null)
-                    board[coor.x, coor.y].potential.Remove(field.number);
+                board[coor.x, coor.y].potential.Remove(field.number);
 
             foreach (Coordinates coor in block.horizontal.fields[field.horizontal.number])
-                if (coor != null)
-                    board[coor.x, coor.y].potential.Remove(field.number);
+                board[coor.x, coor.y].potential.Remove(field.number);
 
             foreach (Coordinates coor in block.vertical.fields[field.vertical.number])
-                if (coor != null)
-                    board[coor.x, coor.y].potential.Remove(field.number);
+                board[coor.x, coor.y].potential.Remove(field.number);
         }
     }
 }

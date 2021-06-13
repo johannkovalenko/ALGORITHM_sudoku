@@ -24,7 +24,7 @@ class Sudoku
 
         outputData.Print(board);
 
-        while(totalFound <81 && twotimesnothing < 2)
+        while(totalFound<81 && twotimesnothing< 2)
         {
             bool found = Sudoku.ReducePot(strategy, board);
 

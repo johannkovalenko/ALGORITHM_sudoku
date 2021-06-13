@@ -15,8 +15,8 @@ namespace Strategies
 
         public void Run()
         {
-            for (int i=1;i<=9;i++)
-                for (int j=1; j<=7; j+=3)
+            for (int i=0;i<9;i++)
+                for (int j=0; j<=7; j+=3)
                 {
                     SubProcedureHorizontal(ref i, ref j);
                     SubProcedureVertical(ref i, ref j);
@@ -60,17 +60,16 @@ namespace Strategies
         private void Horizontal1(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             foreach (Coordinates coordinates in block.square.fields[board[i,j].square.number])
-                if (coordinates != null)
-                    if (coordinates.x != i)
-                    {
-                        board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
-                        board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
-                    }
+            if (coordinates.x != i)
+            {
+                board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
+                board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
+            }
         }
 
         private void Horizontal2(ref int i, ref int j, List<Coordinates> IntListArr)
         {
-            for (int y=1; y<=9; y++)
+            for (int y=0; y<9; y++)
                 if (y!=j && y!=j+1 && y!= j+2)
                 {
                     board[i,y].potential.Remove(IntListArr[0].x);
@@ -88,17 +87,16 @@ namespace Strategies
         private void Vertical1(ref int i, ref int j, List<Coordinates> IntListArr)
         {           
             foreach (Coordinates n in block.square.fields[board[j,i].square.number])
-                if (n != null)
-                    if (n.y != i)
-                    {
-                        board[n.x, n.y].potential.Remove(IntListArr[0].x);
-                        board[n.x, n.y].potential.Remove(IntListArr[0].y); 
-                    }
+            if (n.y != i)
+            {
+                board[n.x, n.y].potential.Remove(IntListArr[0].x);
+                board[n.x, n.y].potential.Remove(IntListArr[0].y); 
+            }
         }
 
         private void Vertical2(ref int i, ref int j, List<Coordinates> IntListArr)
         {
-            for (int l = 1; l <=9; l++)
+            for (int l =0; l<9; l++)
                 if (l != j && l != j+1 && l!= j+2)
                 {
                     board[l,i].potential.Remove(IntListArr[0].x);

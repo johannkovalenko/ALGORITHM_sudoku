@@ -7,7 +7,7 @@ namespace InputData
     {
         public Field[,] Preparation(ref int globalcnt)
         {
-            var board      = new Field[10, 10];
+            var board = new Field[9, 9];
             string[] rawLines = File.ReadAllLines("./sudoku.txt");
 
             for (int i=0; i<rawLines.Length; i++)
@@ -15,7 +15,7 @@ namespace InputData
                 {
                     int number = rawLines[i][j] == '.' ? 0 : rawLines[i][j] - '0';
                     
-                    board[i+1, j+1] = new Field(i+1, j+1, number);
+                    board[i, j] = new Field(i, j, number);
                     
                     if (rawLines[i][j] != '.')
                         globalcnt++;

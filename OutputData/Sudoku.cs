@@ -8,9 +8,9 @@ namespace OutputData
     {
         public void Print(Field[,] board)
         {
-            for (int i = 1; i <=9; i++)
+            for (int i =0; i<9; i++)
             {
-                for(int j=1;j<=9;j++)
+                for(int j=0;j<9;j++)
                 {
                     if (board[i,j].number == 0)
                         Console.Write("  ");
@@ -28,9 +28,9 @@ namespace OutputData
         {
             var sb = new StringBuilder();
 
-            for (int i = 1; i <=9; i++)
+            for (int i =0; i<9; i++)
             {
-                for(int j=1;j<=9;j++)
+                for(int j=0;j<9;j++)
                 {
                     if (board[i,j].number == 0)
                         sb.Append("  ");

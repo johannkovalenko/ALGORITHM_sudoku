@@ -19,9 +19,9 @@ namespace Strategies
 
         public bool Run()
         {
-            for (int i=1;i<=9;i++)
-                for (int o=1;o<=9;o++)
-                    if (GetCount(ref i, ref o) == 1)
+            for (int i=0;i<9;i++)
+                for (int o=0;o<9;o++)
+                    if (GetCount(ref i, ref o) ==0)
                         foreach (var three in threeBlockCollections)
                             if (Task0(ref o, three[i]))
                                 return true;
@@ -35,10 +35,9 @@ namespace Strategies
 
             foreach (var three in threeBlockCollections)
                 foreach (Coordinates j in three[i])
-                    if (j != null)
-                        foreach (int m in board[j.x, j.y].potential)
-                            if (o == m)
-                                cnt++;
+                    foreach (int m in board[j.x, j.y].potential)
+                        if (o == m)
+                            cnt++;
        
             return cnt;
         }

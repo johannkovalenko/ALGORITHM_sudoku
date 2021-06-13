@@ -21,13 +21,12 @@ namespace Strategies
             var howoften = new Dictionary<int,int>();
 
             foreach (Field field in board)
-                if (field != null)
-                {
-                    howoften.Clear();
-                    foreach (int fieldBlock in new int[]{field.square.number, field.horizontal.number, field.vertical.number}) 
-                        if (Task0(field, fieldBlock, howoften))
-                            return true;
-                }
+            {
+                howoften.Clear();
+                foreach (int fieldBlock in new int[]{field.square.number, field.horizontal.number, field.vertical.number}) 
+                    if (Task0(field, fieldBlock, howoften))
+                        return true;
+            }
 
             return false;
         }
@@ -36,7 +35,6 @@ namespace Strategies
         {
             foreach (var three in threeBlockCollections)
                 foreach (Coordinates koors in three[blockno])
-                    if (koors != null)
                         foreach (int number in board[koors.x, koors.y].potential)
                             if (howoften.ContainsKey(number))
                                 howoften[number]++;
@@ -44,7 +42,7 @@ namespace Strategies
                                 howoften.Add(number, 1);
                         
             foreach (int ky in howoften.Keys)
-                if (howoften[ky] == 1 && field.potential.Contains(ky))
+                if (howoften[ky] ==0 && field.potential.Contains(ky))
                 {
                     field.number = ky;
                     field.potential.Clear();
