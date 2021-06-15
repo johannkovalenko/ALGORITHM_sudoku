@@ -41,7 +41,7 @@ namespace Strategies
         {
             for (int m=field.blockCoordinates.x; m<=field.blockCoordinates.x+2; m++) 
                 for (int n=field.blockCoordinates.y; n<=field.blockCoordinates.y+2; n++)
-                    if (!(m == field.x && n == field.y))
+                    if (!(m == field.coor.x && n == field.coor.y))
                         BorderingBlock.Add(new Coordinates(m,n));
         }
 

@@ -2,8 +2,7 @@ using System.Collections.Generic;
 
 public class Field
 {
-    public readonly int x;
-    public readonly int y;
+    public readonly Coordinates coor;
     public readonly Coordinates blockCoordinates;
 
     public int number = 0;
@@ -18,8 +17,7 @@ public class Field
 
     public Field(int x, int y, int number)
     {       
-        this.x = x;
-        this.y = y;
+        this.coor = new Coordinates(x, y);
         this.number = number;
 
         this.potential = number == 0 ? new List<int>(new int[]{1,2,3,4,5,6,7,8,9}) : new List<int>();

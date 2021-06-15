@@ -18,50 +18,52 @@ namespace Strategies
             for (int squareBlockNumber=0; squareBlockNumber<9; squareBlockNumber++)
                 for (int number=0; number<9; number++)
                 {
-                    var fields = new List<Coordinates>();
+                    var twoFields = new List<Coordinates>();
                     
-                    if (ThereAreOnlyTwoFieldsInSquareBlockWithCurrentNumber(fields, squareBlockNumber, number))
+                    if (ThereAreOnlyTwoFieldsInSquareBlockWithCurrentNumber(twoFields, squareBlockNumber, number))
                     {
-                        if (TwoFieldsAreInSameLine(fields))
-                            RemoveNumberFromPotentialInRemainingSevenFieldsInTheSameRow(fields, number);
+                        if (TwoFieldsAreInSameLine(twoFields))
+                            RemoveNumberFromPotentialInRemainingSevenFieldsInTheSameRow(twoFields, number);
 
-                        if (TwoFieldsAreInSameColumn(fields))
-                            RemovePotentialForAllOtherFieldsInColumn(fields, number);
+                        if (TwoFieldsAreInSameColumn(twoFields))
+                            RemovePotentialForAllOtherFieldsInColumn(twoFields, number);
                     }
                 }
         }
 
-        private bool ThereAreOnlyTwoFieldsInSquareBlockWithCurrentNumber(List<Coordinates> fields, int squareBlockNumber, int number)
+        private bool ThereAreOnlyTwoFieldsInSquareBlockWithCurrentNumber(List<Coordinates> twoFields, int squareBlockNumber, int number)
         {
             foreach (Coordinates field in block.square.fields[squareBlockNumber])
                 if (board[field.x, field.y].potential.Contains(number))
-                    fields.Add(new Coordinates(field.x, field.y));
+                    twoFields.Add(new Coordinates(field.x, field.y));
 
-            return fields.Count == 2;
+            return twoFields.Count == 2;
         }
 
-        private bool TwoFieldsAreInSameLine(List<Coordinates> fields)
+        private bool TwoFieldsAreInSameLine(List<Coordinates> twoFields)
         {
-            return fields[0].x == fields[1].x;
+            return twoFields[0].x == twoFields[1].x;
         }
 
-        private void RemoveNumberFromPotentialInRemainingSevenFieldsInTheSameRow(List<Coordinates> fields, int number)
-        { 
-            for (int y=0; y<9; y++)
-                if (y!= fields[0].y && y!= fields[1].y)
-                    board[fields[0].x ,y].potential.Remove(number); 
-        }
-
-        private bool TwoFieldsAreInSameColumn(List<Coordinates> fields)
+        private void RemoveNumberFromPotentialInRemainingSevenFieldsInTheSameRow(List<Coordinates> twoFields, int number)
         {
-            return fields[0].y == fields[1].y;
+            foreach (Coordinates fieldInSameRow in block.horizontal.fields[twoFields[0].x])
+                if (!fieldInSameRow.Equals(twoFields[0]))
+                    if (!fieldInSameRow.Equals(twoFields[1]))
+                        board[fieldInSameRow.x, fieldInSameRow.y].potential.Remove(number); 
         }
 
-        private void RemovePotentialForAllOtherFieldsInColumn(List<Coordinates> fields, int number)
+        private bool TwoFieldsAreInSameColumn(List<Coordinates> twoFields)
         {
-            for (int x=0; x<9; x++)
-                if (x!= fields[0].x && x!= fields[1].x)
-                    board[x, fields[0].y].potential.Remove(number);                 
+            return twoFields[0].y == twoFields[1].y;
+        }
+
+        private void RemovePotentialForAllOtherFieldsInColumn(List<Coordinates> twoFields, int number)
+        {
+            foreach (Coordinates fieldInSameColumn in block.vertical.fields[twoFields[0].y])
+                if (!fieldInSameColumn.Equals(twoFields[0]))
+                    if (!fieldInSameColumn.Equals(twoFields[1]))
+                        board[fieldInSameColumn.x, fieldInSameColumn.y].potential.Remove(number);              
         }
 
     }
