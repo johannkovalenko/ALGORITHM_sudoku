@@ -7,7 +7,7 @@ namespace Strategies
         private Field[,] board;
         private Block block;
 
-        public Strategy2(Field[,] board, Block block)
+        public Strategy2 (Field[,] board, Block block)
         {
             this.board = board;
             this.block = block;
@@ -15,43 +15,53 @@ namespace Strategies
 
         public void Run()
         {
-            foreach (Field field in board)
-            {
-                var interimCoordinates = SubTask0(field);
-                
-                if (interimCoordinates.Count != 2)
-                    continue;
+            for (int squareBlockNumber=0; squareBlockNumber<9; squareBlockNumber++)
+                for (int number=0; number<9; number++)
+                {
+                    var fields = new List<Coordinates>();
+                    
+                    if (ThereAreOnlyTwoFieldsInSquareBlockWithCurrentNumber(fields, squareBlockNumber, number))
+                    {
+                        if (TwoFieldsAreInSameLine(fields))
+                            RemoveNumberFromPotentialInRemainingSevenFieldsInTheSameRow(fields, number);
 
-                SubTask1(interimCoordinates, field);
-                SubTask2(interimCoordinates, field);
-            }
+                        if (TwoFieldsAreInSameColumn(fields))
+                            RemovePotentialForAllOtherFieldsInColumn(fields, number);
+                    }
+                }
         }
 
-        private List<Coordinates> SubTask0(Field field)
+        private bool ThereAreOnlyTwoFieldsInSquareBlockWithCurrentNumber(List<Coordinates> fields, int squareBlockNumber, int number)
         {
-            var interimCoordinates = new List<Coordinates>();
+            foreach (Coordinates field in block.square.fields[squareBlockNumber])
+                if (board[field.x, field.y].potential.Contains(number))
+                    fields.Add(new Coordinates(field.x, field.y));
 
-            foreach (Coordinates coor in block.square.fields[field.x])
-                if (board[coor.x, coor.y].potential.Contains(field.y))
-                    interimCoordinates.Add(new Coordinates(coor.x, coor.y));
-
-            return interimCoordinates;
+            return fields.Count == 2;
         }
 
-        private void SubTask1(List<Coordinates> interimCoordinates, Field field)
+        private bool TwoFieldsAreInSameLine(List<Coordinates> fields)
         {
-            if (interimCoordinates[0].x == interimCoordinates[1].x)
-                for (int l =0; l<9; l++)
-                    if (l != interimCoordinates[0].y && l != interimCoordinates[1].y)
-                        board[interimCoordinates[0].x ,l].potential.Remove(field.y); 
+            return fields[0].x == fields[1].x;
         }
 
-        private void SubTask2(List<Coordinates> interimCoordinates, Field field)
+        private void RemoveNumberFromPotentialInRemainingSevenFieldsInTheSameRow(List<Coordinates> fields, int number)
+        { 
+            for (int y=0; y<9; y++)
+                if (y!= fields[0].y && y!= fields[1].y)
+                    board[fields[0].x ,y].potential.Remove(number); 
+        }
+
+        private bool TwoFieldsAreInSameColumn(List<Coordinates> fields)
         {
-            if (interimCoordinates[0].y == interimCoordinates[1].y)
-                for (int l =0; l<9; l++)
-                    if (l != interimCoordinates[0].x && l != interimCoordinates[1].x)
-                        board[l, interimCoordinates[0].y].potential.Remove(field.y);                 
+            return fields[0].y == fields[1].y;
+        }
+
+        private void RemovePotentialForAllOtherFieldsInColumn(List<Coordinates> fields, int number)
+        {
+            for (int x=0; x<9; x++)
+                if (x!= fields[0].x && x!= fields[1].x)
+                    board[x, fields[0].y].potential.Remove(number);                 
         }
 
     }

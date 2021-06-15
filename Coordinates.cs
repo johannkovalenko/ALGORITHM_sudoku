@@ -8,4 +8,15 @@ public class Coordinates
         this.x = x;
         this.y = y;
     }
+
+    public override bool Equals(object inObject)
+    {
+        Coordinates inObjectCast = (Coordinates) inObject;
+        return inObjectCast.x == this.x && inObjectCast.y == this.y;
+    }
+
+    public override int GetHashCode()
+    {
+        return 1;
+    }
 }

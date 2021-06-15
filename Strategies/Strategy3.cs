@@ -60,11 +60,11 @@ namespace Strategies
         private void Horizontal1(ref int i, ref int j, List<Coordinates> IntListArr)
         {
             foreach (Coordinates coordinates in block.square.fields[board[i,j].square.number])
-            if (coordinates.x != i)
-            {
-                board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
-                board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
-            }
+                if (coordinates.x != i)
+                {
+                    board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].x);
+                    board[coordinates.x, coordinates.y].potential.Remove(IntListArr[0].y); 
+                }
         }
 
         private void Horizontal2(ref int i, ref int j, List<Coordinates> IntListArr)
